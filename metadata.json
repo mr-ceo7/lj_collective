@@ -1,0 +1,6 @@
+{
+  "name": "LJ Collective",
+  "description": "A premium, high-end luxury e-commerce experience showcasing a Parisian editorial aesthetic, elegant lookbook parallax layouts, and bespoke couture storytelling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

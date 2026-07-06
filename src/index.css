@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Display / Brand font — Playfair Display as web-safe stand-in for Salega */
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* ═══════════════════════════════════════════════
+     LJ Collective Brand Palette - REBRANDED TO DARK COUTURE
+     ═══════════════════════════════════════════════ */
+
+  /* Primary Accent — Crimson Depth */
+  --color-luxury-crimson: #710014;
+  --color-luxury-crimson-light: #8a1a2e;
+  --color-luxury-crimson-deep: #580010;
+
+  /* Secondary Accent — Luxurious Gold */
+  --color-luxury-sand: #D4AF37;
+  --color-luxury-sand-light: #e5c158;
+  --color-luxury-sand-dark: #aa8618;
+
+  /* Dark Background Base (Swapped from Light Pearl) */
+  --color-luxury-pearl: #0F0F0F;
+  --color-luxury-pearl-warm: #070707;
+
+  /* Light Foreground Base (Swapped from Obsidian Black) */
+  --color-luxury-obsidian: #F2F1ED;
+  --color-luxury-obsidian-light: #EAE6DF;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-luxury-pearl);
+    color: var(--color-luxury-obsidian);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    
+    /* A very subtle black marble pattern with glowing radial highlights */
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(113, 0, 20, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(22, 22, 22, 0.5) 0%, transparent 100%);
+  }
+
+  /* Elegant Fixed Film Grain / Noise Overlay to remove the basic digital feel */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+    opacity: 0.9;
+  }
+
+  /* Custom elegant scrollbar — Crimson accent on hover */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-luxury-pearl-warm);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #44403c;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-luxury-crimson);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   Custom Premium Typography Utilities
+   ═══════════════════════════════════════════════ */
+
+.display-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.serif-heading {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.text-justify-luxury {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* ═══════════════════════════════════════════════
+   High-End Editorial Styling Extensions
+   ═══════════════════════════════════════════════ */
+
+.img-editorial {
+  filter: grayscale(10%) sepia(5%) brightness(0.9) contrast(1.05);
+  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-editorial:hover {
+  filter: grayscale(0%) sepia(0%) brightness(1) contrast(1);
+}
+
+/* Premium sliding background overlay button */
+.btn-luxury {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-luxury::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-luxury-crimson);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.btn-luxury:hover {
+  color: #ffffff !important;
+  border-color: var(--color-luxury-crimson) !important;
+}
+
+.btn-luxury:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.editorial-grid-line {
+  background-color: rgba(242, 241, 237, 0.05);
+}
+
+.border-editorial {
+  border-width: 0.5px;
+  border-color: rgba(242, 241, 237, 0.08);
+}
+
+/* ═══════════════════════════════════════════════
+   Claymorphism Design System Styles (Dark Adjusted)
+   ═══════════════════════════════════════════════ */
+
+/* Clay card/modal container */
+.clay-card {
+  background: rgba(22, 22, 22, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    8px 8px 24px rgba(0, 0, 0, 0.45),
+    -4px -4px 12px rgba(255, 255, 255, 0.02),
+    inset -4px -4px 10px rgba(0, 0, 0, 0.3),
+    inset 4px 4px 10px rgba(255, 255, 255, 0.06);
+}
+
+/* Clay button/active indicator */
+.clay-btn {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    3px 3px 8px rgba(0, 0, 0, 0.3),
+    -2px -2px 6px rgba(255, 255, 255, 0.01),
+    inset -3px -3px 8px rgba(0, 0, 0, 0.25),
+    inset 3px 3px 8px rgba(255, 255, 255, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #f2f1ed;
+}
+
+.clay-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(40, 40, 40, 0.85);
+  box-shadow: 
+    4px 4px 12px rgba(0, 0, 0, 0.35),
+    -3px -3px 8px rgba(255, 255, 255, 0.02),
+    inset -4px -4px 10px rgba(0, 0, 0, 0.3),
+    inset 4px 4px 10px rgba(255, 255, 255, 0.05);
+}
+
+.clay-btn-active {
+  background: var(--color-luxury-crimson) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 
+    3px 3px 8px rgba(113, 0, 20, 0.25),
+    inset -3px -3px 8px rgba(0, 0, 0, 0.2),
+    inset 3px 3px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Clay input field */
+.clay-input {
+  background: rgba(15, 15, 15, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    inset 2px 2px 5px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.02),
+    1px 1px 2px rgba(255, 255, 255, 0.01);
+  color: #f2f1ed;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clay-input:focus {
+  background: rgba(22, 22, 22, 0.9);
+  border-color: var(--color-luxury-crimson);
+  box-shadow: 
+    inset 2px 2px 6px rgba(113, 0, 20, 0.1),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.02),
+    0 0 0 2px rgba(113, 0, 20, 0.1);
+}
