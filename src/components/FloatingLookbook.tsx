@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { motion, useSpring, useMotionValue } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useSpring, useMotionValue, useTransform, type MotionValue } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
 interface LookbookItem {
@@ -45,6 +45,40 @@ const lookbookItems: LookbookItem[] = [
     depth: -20,
   }
 ];
+
+interface LookbookCardProps {
+  key?: string;
+  item: LookbookItem;
+  smoothX: MotionValue<number>;
+  smoothY: MotionValue<number>;
+}
+
+function LookbookCard({ item, smoothX, smoothY }: LookbookCardProps) {
+  const xTranslate = useTransform(smoothX, (val) => val * item.depth * 2);
+  const yTranslate = useTransform(smoothY, (val) => val * item.depth * 2);
+
+  return (
+    <motion.div
+      style={{ x: xTranslate, y: yTranslate }}
+      className={`absolute ${item.alignment} w-[140px] h-[200px] md:w-[220px] md:h-[320px] clay-card p-2.5 shadow-2xl group hover:border-luxury-crimson transition-all duration-500 pointer-events-auto`}
+    >
+      <div className="relative w-full h-full overflow-hidden bg-stone-100">
+        <img
+          src={item.image}
+          alt={item.title}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        <div className="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+          <span className="text-[8px] uppercase tracking-wider text-luxury-crimson font-mono">{item.tag}</span>
+          <p className="text-white font-serif text-xs md:text-sm">{item.title}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function FloatingLookbook() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -101,45 +135,14 @@ export default function FloatingLookbook() {
       </div>
 
       {/* Floating Canvas Items */}
-      {lookbookItems.map((item, index) => {
-        // Calculate offset based on depth and smooth spring values
-        const xTranslate = useSpring(
-          useMotionValue(0), 
-          { damping: 30 + index * 5, stiffness: 100 - index * 10 }
-        );
-        const yTranslate = useSpring(
-          useMotionValue(0),
-          { damping: 30 + index * 5, stiffness: 100 - index * 10 }
-        );
-
-        // Bind raw calculations to spring motion values
-        smoothX.on('change', (val) => xTranslate.set(val * item.depth * 2));
-        smoothY.on('change', (val) => yTranslate.set(val * item.depth * 2));
-
-        return (
-          <motion.div
-            key={item.id}
-            style={{ x: xTranslate, y: yTranslate }}
-            className={`absolute ${item.alignment} w-[140px] h-[200px] md:w-[220px] md:h-[320px] clay-card p-2.5 shadow-2xl group hover:border-luxury-crimson transition-all duration-500 pointer-events-auto`}
-          >
-            <div className="relative w-full h-full overflow-hidden bg-stone-100">
-              <img
-                src={item.image}
-                alt={item.title}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              {/* Card Hover Information */}
-              <div className="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <span className="text-[8px] uppercase tracking-wider text-luxury-crimson font-mono">{item.tag}</span>
-                <p className="text-white font-serif text-xs md:text-sm">{item.title}</p>
-              </div>
-            </div>
-          </motion.div>
-        );
-      })}
+      {lookbookItems.map((item) => (
+        <LookbookCard
+          key={item.id}
+          item={item}
+          smoothX={smoothX}
+          smoothY={smoothY}
+        />
+      ))}
 
       {/* Center Cinematic Branding Anchor */}
       <div className="relative z-10 text-center max-w-lg md:max-w-2xl flex flex-col items-center pointer-events-none">

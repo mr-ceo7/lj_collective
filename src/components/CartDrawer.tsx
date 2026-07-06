@@ -143,6 +143,11 @@ export default function CartDrawer({
                             <span className="text-[10px] uppercase tracking-widest text-stone-400 font-mono block">
                               Collection: <span className="text-luxury-obsidian/80 font-mono">{item.product.collection}</span>
                             </span>
+                            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-mono block">
+                              Availability: <span className={item.quantity >= item.product.stock ? 'text-luxury-crimson font-bold' : 'text-luxury-obsidian/80'}>
+                                {item.product.stock - item.quantity} remaining after this bag
+                              </span>
+                            </span>
                           </div>
 
                           <div className="flex items-center justify-between mt-3">
@@ -157,7 +162,9 @@ export default function CartDrawer({
                               <span className="px-3 text-xs font-mono font-medium">{item.quantity}</span>
                               <button
                                 onClick={() => onUpdateQuantity(item.product.id, item.selectedSize, 1)}
-                                className="px-2 py-1 text-xs hover:bg-stone-100 text-luxury-obsidian"
+                                disabled={item.quantity >= item.product.stock}
+                                className="px-2 py-1 text-xs hover:bg-stone-100 text-luxury-obsidian disabled:text-stone-300 disabled:cursor-not-allowed"
+                                aria-label={`Increase quantity for ${item.product.name}`}
                               >
                                 +
                               </button>
@@ -283,7 +290,7 @@ export default function CartDrawer({
 
                   {/* Payment assurances */}
                   <p className="text-[9px] text-stone-400 leading-relaxed font-sans mt-2 italic text-center">
-                    All payment processes are secured through 256-bit military cryptographic SSL overlays.
+                    Payment authorization must be connected to your production payment provider before launch.
                   </p>
 
                   <button

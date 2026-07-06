@@ -12,7 +12,7 @@ interface ShowroomProps {
   onSelectCategory: (category: string) => void;
   onSelectCollection: (collection: string) => void;
   onQuickView: (product: Product) => void;
-  onAddToBag: (product: Product, size: string) => void;
+  onAddToBag: (product: Product, size: string) => boolean;
   wishlist: string[];
   onToggleWishlist: (productId: string) => void;
   comparedIds: string[];
@@ -302,10 +302,11 @@ export default function Showroom({
                         
                         <button
                           onClick={() => onAddToBag(product, product.sizes[0])}
+                          disabled={product.stock <= 0}
                           className="flex items-center space-x-1.5 text-white hover:text-luxury-crimson transition-colors text-[10px] uppercase tracking-widest font-medium cursor-pointer"
                         >
                           <Plus size={13} />
-                          <span>Add Bag</span>
+                          <span>{product.stock > 0 ? 'Add Bag' : 'Reserved'}</span>
                         </button>
                       </div>
                     </div>
@@ -347,6 +348,12 @@ export default function Showroom({
                       <div className="flex items-center justify-between mt-1 text-[9px] text-stone-400 font-mono">
                         <span>Sizes:</span>
                         <span>{product.sizes.join(', ')}</span>
+                      </div>
+                      <div className="flex items-center justify-between mt-2 text-[9px] uppercase tracking-widest font-mono">
+                        <span className={product.stock <= 3 ? 'text-luxury-crimson' : 'text-stone-400'}>
+                          {product.stock > 0 ? `${product.stock} available` : 'Fully reserved'}
+                        </span>
+                        <span className="text-stone-500">Insured delivery</span>
                       </div>
                     </div>
                   </motion.div>

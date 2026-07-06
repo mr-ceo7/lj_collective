@@ -7,7 +7,7 @@ import SizeGuideModal from './SizeGuideModal';
 interface ProductQuickViewProps {
   product: Product | null;
   onClose: () => void;
-  onAddToBag: (product: Product, size: string) => void;
+  onAddToBag: (product: Product, size: string) => boolean;
 }
 
 export default function ProductQuickView({
@@ -21,15 +21,26 @@ export default function ProductQuickView({
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
+  const [addError, setAddError] = useState('');
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
 
   const handleAddClick = () => {
+    if (product.stock <= 0) {
+      setAddError('This piece is currently fully reserved.');
+      return;
+    }
+
+    setAddError('');
     setIsAdding(true);
     setTimeout(() => {
-      onAddToBag(product, selectedSize);
+      const wasAdded = onAddToBag(product, selectedSize);
       setIsAdding(false);
-      setJustAdded(true);
-      setTimeout(() => setJustAdded(false), 2000);
+      if (wasAdded) {
+        setJustAdded(true);
+        setTimeout(() => setJustAdded(false), 2000);
+      } else {
+        setAddError('Available stock for this piece is already in your bag.');
+      }
     }, 800);
   };
 
@@ -125,6 +136,15 @@ export default function ProductQuickView({
               ${product.price.toLocaleString()}
             </div>
 
+            <div className="mb-5 flex flex-wrap items-center gap-2 text-[9px] uppercase tracking-widest font-mono">
+              <span className="border border-luxury-crimson/40 px-2 py-1 text-luxury-crimson">
+                {product.stock > 0 ? `${product.stock} available` : 'Fully reserved'}
+              </span>
+              <span className="border border-stone-200 px-2 py-1 text-stone-400">
+                Complimentary insured delivery
+              </span>
+            </div>
+
             {/* Description */}
             <p className="text-xs text-luxury-obsidian/80 leading-relaxed font-sans mb-6 text-justify-luxury">
               {product.description}
@@ -176,10 +196,12 @@ export default function ProductQuickView({
           <div className="border-t border-stone-200 pt-6">
             <button
               onClick={handleAddClick}
-              disabled={isAdding || justAdded}
+              disabled={isAdding || justAdded || product.stock <= 0}
               className={`w-full py-3.5 flex items-center justify-center space-x-2 text-xs uppercase tracking-widest font-semibold transition-all duration-300 cursor-pointer ${
                 justAdded
                   ? 'bg-emerald-600 text-white'
+                  : product.stock <= 0
+                  ? 'bg-stone-500 text-white cursor-not-allowed'
                   : 'bg-luxury-obsidian text-white hover:bg-luxury-crimson'
               }`}
             >
@@ -189,9 +211,17 @@ export default function ProductQuickView({
                   ? 'TAILORING BAG...'
                   : justAdded
                   ? 'ADDED TO BAG'
+                  : product.stock <= 0
+                  ? 'FULLY RESERVED'
                   : 'ADD TO SHOPPING BAG'}
               </span>
             </button>
+
+            {addError && (
+              <p className="mt-3 text-center text-[10px] uppercase tracking-widest text-luxury-crimson font-mono">
+                {addError}
+              </p>
+            )}
 
             {/* Micro-assurances (Trust badges) */}
             <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-stone-100 text-center">

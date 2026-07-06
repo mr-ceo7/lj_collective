@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { ChevronDown } from 'lucide-react';
+import { Calendar, ChevronDown, ShoppingBag } from 'lucide-react';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,14 +17,17 @@ export default function Hero() {
   const opacityText = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const scaleBg = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
   
-  // Left-side image speed parallax
-  const yLeftImg = useTransform(scrollYProgress, [0, 1], ['0%', '-15%']);
-  // Right-side image speed parallax
-  const yRightImg = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  const yAccent = useTransform(scrollYProgress, [0, 1], ['0%', '-18%']);
 
   const handleScrollDown = () => {
     const el = document.getElementById('floating-lookbook');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleBookFitting = () => {
+    window.dispatchEvent(new CustomEvent('ljc:open-concierge', {
+      detail: { message: 'Book Private Atelier Fitting' },
+    }));
   };
 
   return (
@@ -38,8 +41,8 @@ export default function Hero() {
         style={{ y: yBg, scale: scaleBg }}
         className="absolute inset-0 w-full h-full select-none"
       >
-        {/* Dark elegant radial gradient to overlay on photo */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F]/50 via-[#0F0F0F]/80 to-[#0F0F0F] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F]/45 via-[#0F0F0F]/78 to-[#0F0F0F] z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_43%,rgba(15,15,15,0.18)_0%,rgba(15,15,15,0.72)_62%,rgba(15,15,15,0.95)_100%)] z-10" />
         <img
           src="/assets/hero-bg.png"
           alt="Luxury fashion background"
@@ -47,38 +50,24 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Decorative Parallax 2D Images (Layered Layout) */}
+      {/* Editorial product focus */}
       <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none hidden md:block z-20">
-        
-        {/* Left Floating Image Card (Parallax) */}
         <motion.div
-          style={{ y: yLeftImg }}
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.5, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute left-[5%] top-[25%] w-[160px] lg:w-[200px] h-[240px] lg:h-[300px] clay-card p-2.5 shadow-2xl"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80"
-            alt="Maison silhouette left"
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover img-editorial"
-          />
-        </motion.div>
-
-        {/* Right Floating Image Card (Parallax) */}
-        <motion.div
-          style={{ y: yRightImg }}
+          style={{ y: yAccent }}
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute right-[5%] top-[15%] w-[180px] lg:w-[220px] h-[180px] lg:h-[220px] clay-card p-2.5 shadow-2xl"
+          className="absolute right-[6%] top-[19%] w-[170px] lg:w-[230px] aspect-[4/5] border border-white/10 bg-black/20 p-2 shadow-2xl backdrop-blur-xs"
         >
           <img
             src="/assets/burgundy-blazer.png"
             alt="Bespoke Velvet Blazer"
-            className="w-full h-full object-cover rounded-lg img-editorial"
+            className="w-full h-full object-cover img-editorial"
           />
+          <div className="mt-3 flex items-center justify-between gap-3 text-[8px] uppercase tracking-widest text-luxury-obsidian/70">
+            <span>Winter Silhouette</span>
+            <span className="text-luxury-sand">Limited</span>
+          </div>
         </motion.div>
       </div>
 
@@ -109,7 +98,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.5 }}
-            className="block italic text-luxury-crimson font-normal mt-2 md:-mt-1"
+            className="block italic text-luxury-crimson font-normal mt-1 text-[0.86em]"
           >
             Collective
           </motion.span>
@@ -117,38 +106,59 @@ export default function Hero() {
 
         <motion.p
           initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.68 }}
+          className="mt-5 max-w-xl font-serif text-lg md:text-2xl leading-snug text-luxury-obsidian"
+        >
+          Couture gowns, tailored occasionwear, and private fitting experiences.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 0.8, y: 0 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="text-xs md:text-sm font-sans tracking-widest uppercase text-luxury-obsidian mt-6 max-w-sm md:max-w-md leading-relaxed"
+          className="text-[11px] md:text-xs font-sans tracking-[0.18em] uppercase text-luxury-obsidian/80 mt-4 max-w-lg leading-relaxed"
         >
-          ELEGANCE TAILORED FOR YOU. A MAISON GUIDED BY IMMERSIVE DESIGN, SOPHISTICATED TEXTILES, AND UNCOMPROMISING SARTORIAL SENSITIVITY.
+          Limited atelier quantities, insured delivery, and bespoke alteration support for every collector.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 1 }}
-          className="mt-8 flex flex-col md:flex-row items-center gap-4"
+          className="mt-8 flex flex-col sm:flex-row items-center gap-3"
         >
           <button
             onClick={() => {
               const el = document.getElementById('showroom');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="px-6 py-2.5 bg-luxury-obsidian border border-luxury-obsidian text-[10px] uppercase tracking-widest text-luxury-pearl font-medium btn-luxury cursor-pointer"
+            className="inline-flex min-w-[190px] items-center justify-center gap-2 px-7 py-3.5 bg-luxury-obsidian border border-luxury-obsidian text-[10px] uppercase tracking-widest text-luxury-pearl font-semibold btn-luxury cursor-pointer"
           >
-            VIEW ATELIER
+            <ShoppingBag size={13} />
+            Shop The Collection
           </button>
           
           <button
-            onClick={() => {
-              const el = document.getElementById('reviews');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="px-6 py-2.5 border border-luxury-obsidian/30 hover:border-luxury-obsidian text-[10px] uppercase tracking-widest text-luxury-obsidian font-medium btn-luxury cursor-pointer"
+            onClick={handleBookFitting}
+            className="inline-flex min-w-[190px] items-center justify-center gap-2 px-7 py-3.5 border border-luxury-obsidian/35 hover:border-luxury-obsidian text-[10px] uppercase tracking-widest text-luxury-obsidian font-semibold btn-luxury cursor-pointer"
           >
-            MAISON VOICES 🫶
+            <Calendar size={13} />
+            Book Private Fitting
           </button>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.75 }}
+          transition={{ duration: 1.2, delay: 1.1 }}
+          className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[8px] uppercase tracking-[0.2em] text-luxury-obsidian/70"
+        >
+          <span>Insured delivery</span>
+          <span className="h-1 w-1 rounded-full bg-luxury-crimson" />
+          <span>Private alterations</span>
+          <span className="h-1 w-1 rounded-full bg-luxury-crimson" />
+          <span>Limited atelier stock</span>
         </motion.div>
       </motion.div>
 

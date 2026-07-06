@@ -11,11 +11,53 @@ import CompareModal from './components/CompareModal';
 import Reviews from './components/Reviews';
 import Footer from './components/Footer';
 import ConciergeChat from './components/ConciergeChat';
+import AdminDashboard from './admin/AdminDashboard';
 import { products, reviews } from './data';
 import { Product, CartItem } from './types';
-import { Sparkles, ArrowRight, ShoppingBag, ArrowUp, Heart, Scale } from 'lucide-react';
+import { Sparkles, ArrowUp, Scale } from 'lucide-react';
+
+const CART_STORAGE_KEY = 'ljc_cart';
+const WISHLIST_STORAGE_KEY = 'ljc_wishlist';
+
+function readStoredStringArray(key: string): string[] {
+  try {
+    const value = localStorage.getItem(key);
+    const parsed = value ? JSON.parse(value) : [];
+    return Array.isArray(parsed) ? parsed.filter((item) => typeof item === 'string') : [];
+  } catch {
+    localStorage.removeItem(key);
+    return [];
+  }
+}
+
+function readStoredCart(): CartItem[] {
+  try {
+    const value = localStorage.getItem(CART_STORAGE_KEY);
+    const parsed = value ? JSON.parse(value) : [];
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed
+      .filter((item): item is CartItem => (
+        item &&
+        typeof item === 'object' &&
+        item.product &&
+        typeof item.product.id === 'string' &&
+        typeof item.selectedSize === 'string' &&
+        Number.isFinite(item.quantity)
+      ))
+      .map((item) => ({
+        ...item,
+        quantity: Math.max(1, Math.min(item.quantity, item.product.stock)),
+      }))
+      .filter((item) => item.quantity > 0 && item.product.stock > 0);
+  } catch {
+    localStorage.removeItem(CART_STORAGE_KEY);
+    return [];
+  }
+}
 
 export default function App() {
+  const isAdminRoute = window.location.pathname === '/admin' || window.location.hash === '#admin';
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -26,16 +68,8 @@ export default function App() {
   const [comparedIds, setComparedIds] = useState<string[]>([]);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
 
-  // Load wishlist from client local storage if exists
   useEffect(() => {
-    const savedWishlist = localStorage.getItem('ljc_wishlist');
-    if (savedWishlist) {
-      try {
-        setWishlist(JSON.parse(savedWishlist));
-      } catch (e) {
-        console.error('Error restoring wishlist:', e);
-      }
-    }
+    setWishlist(readStoredStringArray(WISHLIST_STORAGE_KEY));
   }, []);
 
   const handleToggleWishlist = (productId: string) => {
@@ -43,7 +77,7 @@ export default function App() {
       ? wishlist.filter((id) => id !== productId)
       : [...wishlist, productId];
     setWishlist(updated);
-    localStorage.setItem('ljc_wishlist', JSON.stringify(updated));
+    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(updated));
   };
 
   const handleToggleCompare = (productId: string) => {
@@ -71,10 +105,9 @@ export default function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    // Elegant theatrical entry delay
     const timer = setTimeout(() => {
       setIsUnveiled(true);
-    }, 1800);
+    }, 650);
     return () => clearTimeout(timer);
   }, []);
 
@@ -124,36 +157,34 @@ export default function App() {
     restDelta: 0.001,
   });
 
-  // Load cart from client local storage if exists
   useEffect(() => {
-    const savedCart = localStorage.getItem('ljc_cart');
-    if (savedCart) {
-      try {
-        setCart(JSON.parse(savedCart));
-      } catch (e) {
-        console.error('Error restoring bag from cache:', e);
-      }
-    }
+    setCart(readStoredCart());
   }, []);
 
-  // Sync cart back to local storage
   const saveCartToLocalStorage = (newCart: CartItem[]) => {
     setCart(newCart);
-    localStorage.setItem('ljc_cart', JSON.stringify(newCart));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(newCart));
   };
 
-  const handleAddToBag = (product: Product, size: string) => {
+  const handleAddToBag = (product: Product, size: string): boolean => {
+    const currentQuantity = cart
+      .filter((item) => item.product.id === product.id)
+      .reduce((total, item) => total + item.quantity, 0);
+
+    if (currentQuantity >= product.stock) {
+      setIsCartOpen(true);
+      return false;
+    }
+
     const existingIndex = cart.findIndex(
       (item) => item.product.id === product.id && item.selectedSize === size
     );
 
     if (existingIndex > -1) {
-      // Increment existing item quantity
       const updated = [...cart];
       updated[existingIndex].quantity += 1;
       saveCartToLocalStorage(updated);
     } else {
-      // Add fresh product item
       const fresh: CartItem = {
         product,
         selectedSize: size,
@@ -162,15 +193,18 @@ export default function App() {
       saveCartToLocalStorage([...cart, fresh]);
     }
     
-    // Automatically trigger visual drawer to celebrate adding
     setIsCartOpen(true);
+    return true;
   };
 
   const handleUpdateQuantity = (productId: string, size: string, change: number) => {
     const updated = cart
       .map((item) => {
         if (item.product.id === productId && item.selectedSize === size) {
-          return { ...item, quantity: item.quantity + change };
+          return {
+            ...item,
+            quantity: Math.min(item.product.stock, item.quantity + change),
+          };
         }
         return item;
       })
@@ -189,6 +223,10 @@ export default function App() {
   const handleClearCart = () => {
     saveCartToLocalStorage([]);
   };
+
+  if (isAdminRoute) {
+    return <AdminDashboard />;
+  }
 
   return (
     <>
