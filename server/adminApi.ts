@@ -261,6 +261,20 @@ app.get('*', (req, res, next) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`LJ Collective admin API listening on http://localhost:${port}`);
+  console.log(`__dirname is: ${__dirname}`);
+  console.log(`distPath is: ${distPath}`);
+  try {
+    const fs = await import('fs');
+    console.log(`Files in distPath:`, fs.readdirSync(distPath));
+    const assetsPath = path.join(distPath, 'assets');
+    if (fs.existsSync(assetsPath)) {
+      console.log(`Files in distPath/assets (first 15):`, fs.readdirSync(assetsPath).slice(0, 15));
+    } else {
+      console.log(`distPath/assets does not exist!`);
+    }
+  } catch (err) {
+    console.error(`Error listing diagnostic directories:`, err);
+  }
 });
