@@ -90,6 +90,68 @@ export default function AdminDashboard() {
     void loadAdminData();
   };
 
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>, target: 'product' | 'campaign') => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsLoading(true);
+    setStatusMessage('Uploading image(s)...');
+
+    try {
+      const uploadPromises = Array.from(files).map((file) => {
+        return new Promise<{ imageUrl: string }>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = async () => {
+            try {
+              const res = await fetch('/api/admin/upload', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  filename: file.name,
+                  base64: reader.result,
+                }),
+              });
+              if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText || 'Upload failed');
+              }
+              const data = await res.json();
+              resolve(data);
+            } catch (err) {
+              reject(err);
+            }
+          };
+          reader.onerror = () => reject(new Error('File reading error'));
+          reader.readAsDataURL(file);
+        });
+      });
+
+      const results = await Promise.all(uploadPromises);
+      const urls = results.map((r) => r.imageUrl);
+
+      if (target === 'product') {
+        setProductDraft((current) => ({
+          ...current,
+          images: current.images.length === 1 && current.images[0] === '' ? urls : [...current.images, ...urls],
+        }));
+        setStatusMessage(`Successfully uploaded ${urls.length} product image(s).`);
+      } else {
+        setCampaignDraft((current) => ({
+          ...current,
+          imageUrl: urls[0],
+        }));
+        setStatusMessage('Successfully uploaded campaign image.');
+      }
+    } catch (error) {
+      setStatusMessage(error instanceof Error ? error.message : 'Unable to upload image.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleCreateProduct = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatusMessage('');
@@ -259,7 +321,19 @@ export default function AdminDashboard() {
                 </select>
               </div>
               <textarea required value={productDraft.description} onChange={(e) => setProductDraft({ ...productDraft, description: e.target.value })} placeholder="Description" rows={4} className="clay-input w-full px-3 py-2 text-xs" />
-              <input value={productDraft.images.join(', ')} onChange={(e) => setProductDraft({ ...productDraft, images: e.target.value.split(',').map((value) => value.trim()) })} placeholder="Image URLs, comma separated" className="clay-input w-full px-3 py-2 text-xs" />
+              <div className="flex flex-col gap-2">
+                <input value={productDraft.images.join(', ')} onChange={(e) => setProductDraft({ ...productDraft, images: e.target.value.split(',').map((value) => value.trim()) })} placeholder="Image URLs, comma separated" className="clay-input w-full px-3 py-2 text-xs" />
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-stone-400 font-mono">Or:</span>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, 'product')}
+                    className="text-xs text-stone-400 file:mr-2 file:py-1 file:px-2 file:rounded-xs file:border-0 file:text-[10px] file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 cursor-pointer"
+                  />
+                </div>
+              </div>
               <input value={productDraft.sizes.join(', ')} onChange={(e) => setProductDraft({ ...productDraft, sizes: e.target.value.split(',').map((value) => value.trim()) })} placeholder="Sizes, comma separated" className="clay-input w-full px-3 py-2 text-xs" />
               <button type="submit" className="inline-flex w-full items-center justify-center gap-2 bg-luxury-crimson px-4 py-3 text-[10px] font-semibold uppercase tracking-widest text-white">
                 <Save size={14} />
@@ -295,7 +369,18 @@ export default function AdminDashboard() {
             <form onSubmit={handleCreateCampaign} className="space-y-4 border border-white/10 p-5">
               <h2 className="font-serif text-2xl">Post Campaign Photo</h2>
               <input required value={campaignDraft.title} onChange={(e) => setCampaignDraft({ ...campaignDraft, title: e.target.value })} placeholder="Campaign title" className="clay-input w-full px-3 py-2 text-xs" />
-              <input required value={campaignDraft.imageUrl} onChange={(e) => setCampaignDraft({ ...campaignDraft, imageUrl: e.target.value })} placeholder="Uploaded image URL" className="clay-input w-full px-3 py-2 text-xs" />
+              <div className="flex flex-col gap-2">
+                <input required value={campaignDraft.imageUrl} onChange={(e) => setCampaignDraft({ ...campaignDraft, imageUrl: e.target.value })} placeholder="Uploaded image URL" className="clay-input w-full px-3 py-2 text-xs" />
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-stone-400 font-mono">Or:</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, 'campaign')}
+                    className="text-xs text-stone-400 file:mr-2 file:py-1 file:px-2 file:rounded-xs file:border-0 file:text-[10px] file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 cursor-pointer"
+                  />
+                </div>
+              </div>
               
               <div className="grid grid-cols-2 gap-3">
                 <select value={campaignDraft.placement} onChange={(e) => setCampaignDraft({ ...campaignDraft, placement: e.target.value as CampaignAsset['placement'] })} className="clay-input px-3 py-2 text-xs">

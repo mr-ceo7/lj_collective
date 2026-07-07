@@ -244,6 +244,42 @@ app.post('/api/admin/uploads/campaign-signature', requireAdmin, (_request, respo
   });
 });
 
+app.post('/api/admin/upload', requireAdmin, async (request, response) => {
+  try {
+    const { filename, base64 } = request.body;
+    if (!filename || !base64) {
+      response.status(400).send('Filename and base64 data are required.');
+      return;
+    }
+
+    const matches = base64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      response.status(400).send('Invalid base64 string.');
+      return;
+    }
+
+    const fs = await import('fs');
+    const buffer = Buffer.from(matches[2], 'base64');
+
+    const safeFilename = `${Date.now()}-${filename.replace(/[^a-zA-Z0-9.\-_]/g, '')}`;
+    const rootAssetsDir = __dirname.endsWith('server')
+      ? path.resolve(__dirname, '../assets')
+      : path.resolve(__dirname, 'assets');
+
+    if (!fs.existsSync(rootAssetsDir)) {
+      fs.mkdirSync(rootAssetsDir, { recursive: true });
+    }
+
+    const filePath = path.join(rootAssetsDir, safeFilename);
+    fs.writeFileSync(filePath, buffer);
+
+    response.json({ imageUrl: `/assets/${safeFilename}` });
+  } catch (error) {
+    console.error('Error saving uploaded file:', error);
+    response.status(500).send(error instanceof Error ? error.message : 'Internal server error');
+  }
+});
+
 // Resolve the static files directory:
 // If running from server/ directory in dev, serve from '../dist'.
 // If bundled in production (dist/server.js), serve from current directory '.'.
