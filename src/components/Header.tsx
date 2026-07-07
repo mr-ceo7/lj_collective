@@ -86,76 +86,91 @@ export default function Header({
         animate={{ 
           y: isHeaderVisible ? 0 : -100, 
           opacity: 1,
-          backgroundColor: isScrolled ? 'rgba(242, 241, 237, 0.95)' : 'rgba(242, 241, 237, 0.85)',
-          borderBottomColor: 'rgba(22, 22, 22, 0.08)'
+          backgroundColor: isScrolled ? 'rgba(15, 15, 15, 0.85)' : 'rgba(15, 15, 15, 0)',
+          borderBottomColor: isScrolled ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0)'
         }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 w-full z-50 px-6 py-1 md:px-12 border-b shadow-[0_2px_20px_-5px_rgba(22,22,22,0.03)]"
+        className="fixed top-0 left-0 w-full z-50 px-6 py-1 md:px-12 border-b shadow-[0_4px_30px_rgba(0,0,0,0.2)]"
         style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 md:h-20">
+        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 md:h-20 relative">
           
-          {/* Mobile Menu Icon */}
-          <button
-            id="mobile-menu-btn"
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="md:hidden text-luxury-obsidian hover:text-luxury-crimson p-1"
-            aria-label="Open navigation menu"
-          >
-            <Menu size={22} />
-          </button>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8" id="desktop-nav">
+          {/* Left Side: Desktop Nav (left half) & Mobile Menu Icon */}
+          <div className="flex-1 flex justify-start items-center">
+            {/* Mobile Menu Icon */}
             <button
-              onClick={() => handleNavClick('category', 'all')}
-              className="text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.25em] cursor-pointer font-medium"
+              id="mobile-menu-btn"
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden text-luxury-obsidian hover:text-luxury-crimson p-1 transition-colors duration-300"
+              aria-label="Open navigation menu"
             >
-              All Items
+              <Menu size={22} />
             </button>
-            <div className="relative group">
-              <button className="text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.25em] cursor-pointer font-medium">
-                Collections
+
+            {/* Left Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8" id="desktop-nav-left">
+              <button
+                onClick={() => handleNavClick('category', 'all')}
+                className="relative text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.2em] cursor-pointer font-medium group py-2"
+              >
+                All Items
+                <span className="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-luxury-crimson transition-all duration-350 ease-out -translate-x-1/2 group-hover:w-full"></span>
               </button>
-              <div className="absolute left-0 top-full pt-4 hidden group-hover:block">
-                <div className="bg-luxury-pearl border border-luxury-obsidian/10 p-4 w-48 shadow-2xl flex flex-col space-y-3">
-                  <button
-                    onClick={() => handleNavClick('collection', 'Summer Atelier')}
-                    className="text-left text-xs uppercase tracking-widest text-luxury-obsidian/70 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 cursor-pointer"
-                  >
-                    Summer Atelier
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('collection', 'Winter Silhouette')}
-                    className="text-left text-xs uppercase tracking-widest text-luxury-obsidian/70 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 cursor-pointer"
-                  >
-                    Winter Silhouette
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('collection', 'Essential Classic')}
-                    className="text-left text-xs uppercase tracking-widest text-luxury-obsidian/70 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 cursor-pointer"
-                  >
-                    Essential Classic
-                  </button>
+              
+              <div className="relative group">
+                <button className="relative text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.2em] cursor-pointer font-medium group py-2">
+                  Collections
+                  <span className="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-luxury-crimson transition-all duration-350 ease-out -translate-x-1/2 group-hover:w-full"></span>
+                </button>
+                
+                {/* Collections Dropdown */}
+                <div className="absolute left-0 top-full pt-4 opacity-0 -translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50">
+                  <div className="clay-card p-5 w-52 shadow-2xl flex flex-col space-y-3.5 rounded-sm">
+                    <button
+                      onClick={() => handleNavClick('collection', 'Summer Atelier')}
+                      className="text-left text-xs uppercase tracking-widest text-luxury-obsidian/70 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 cursor-pointer flex items-center justify-between group/item"
+                    >
+                      <span>Summer Atelier</span>
+                      <ArrowRight size={10} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-300 text-luxury-crimson" />
+                    </button>
+                    <button
+                      onClick={() => handleNavClick('collection', 'Winter Silhouette')}
+                      className="text-left text-xs uppercase tracking-widest text-luxury-obsidian/70 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 cursor-pointer flex items-center justify-between group/item"
+                    >
+                      <span>Winter Silhouette</span>
+                      <ArrowRight size={10} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-300 text-luxury-crimson" />
+                    </button>
+                    <button
+                      onClick={() => handleNavClick('collection', 'Essential Classic')}
+                      className="text-left text-xs uppercase tracking-widest text-luxury-obsidian/70 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 cursor-pointer flex items-center justify-between group/item"
+                    >
+                      <span>Essential Classic</span>
+                      <ArrowRight size={10} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-300 text-luxury-crimson" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <button
-              onClick={() => handleNavClick('category', 'haute-couture')}
-              className="text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.25em] cursor-pointer font-medium"
-            >
-              Haute Couture
-            </button>
-            <button
-              onClick={() => handleNavClick('category', 'ready-to-wear')}
-              className="text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.25em] cursor-pointer font-medium"
-            >
-              Ready-To-Wear
-            </button>
-          </nav>
 
-          {/* Logo */}
-          <div className="flex flex-col items-center select-none text-center md:absolute md:left-1/2 md:-translate-x-1/2">
+              <button
+                onClick={() => handleNavClick('category', 'jewelry')}
+                className="relative text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.2em] cursor-pointer font-medium group py-2"
+              >
+                Jewelry
+                <span className="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-luxury-crimson transition-all duration-350 ease-out -translate-x-1/2 group-hover:w-full"></span>
+              </button>
+
+              <button
+                onClick={() => handleNavClick('category', 'accessories')}
+                className="relative text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.2em] cursor-pointer font-medium group py-2"
+              >
+                Accessories
+                <span className="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-luxury-crimson transition-all duration-350 ease-out -translate-x-1/2 group-hover:w-full"></span>
+              </button>
+            </nav>
+          </div>
+
+          {/* Centered Logo */}
+          <div className="flex flex-col items-center select-none text-center absolute left-1/2 -translate-x-1/2 z-10">
             <button
               onClick={() => {
                 onSelectCategory('all');
@@ -163,89 +178,109 @@ export default function Header({
               }}
               className="transition-colors"
             >
-              <img src="/assets/logo-transparent.png" alt="LJ Collective" className="h-10 md:h-12 w-auto" />
+              <img src="/assets/logo-transparent.png" alt="LJ Collective" className="h-14 md:h-22 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </button>
-            <span className="hidden md:block text-[8px] uppercase tracking-[0.3em] text-luxury-crimson-light mt-1 font-display font-medium">
-              Elegance tailored for you
-            </span>
           </div>
 
-          {/* Right Utility Icons */}
-          <div className="flex items-center space-x-6" id="header-utilities">
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              className="text-luxury-obsidian hover:text-luxury-crimson transition-colors cursor-pointer"
-              aria-label="Open search panel"
-            >
-              <Search size={20} />
-            </button>
-            
-            <div className="hidden md:block relative group">
-              <button 
-                className="text-luxury-obsidian hover:text-luxury-crimson transition-colors cursor-pointer flex items-center space-x-1"
-                aria-label="Client account space"
+          {/* Right Side: Desktop Nav (right half) & Utilities */}
+          <div className="flex-1 flex justify-end items-center space-x-8 md:space-x-10">
+            {/* Right Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8" id="desktop-nav-right">
+              <button
+                onClick={() => handleNavClick('category', 'haute-couture')}
+                className="relative text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.25em] cursor-pointer font-medium group py-2"
               >
-                <User size={20} />
+                Haute Couture
+                <span className="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-luxury-crimson transition-all duration-355 ease-out -translate-x-1/2 group-hover:w-full"></span>
               </button>
-              {/* Account Dropdown */}
-              <div className="absolute right-0 top-full pt-4 hidden group-hover:block">
-                <div className="bg-[#F2F1ED] border border-stone-200/60 p-5 w-64 shadow-xl flex flex-col">
-                  <div className="border-b border-stone-200/60 pb-3 mb-3">
-                    <span className="mono-label text-luxury-crimson">Maison Elite</span>
-                    <p className="font-serif text-sm font-medium text-luxury-obsidian mt-1">Madame de Beauvoir</p>
-                    <p className="text-[10px] text-stone-500 font-mono mt-0.5">collector_id: #LJC-99082</p>
-                  </div>
-                  <div className="flex flex-col space-y-2 text-xs">
-                    <button className="text-left text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors">Bespoke Fitting Schedule</button>
-                    <button className="text-left text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors">My Wardrobe / Orders</button>
-                    <button className="text-left text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors">Atelier Concierge Chat</button>
+              
+              <button
+                onClick={() => handleNavClick('category', 'ready-to-wear')}
+                className="relative text-xs uppercase tracking-widest text-luxury-obsidian/80 hover:text-luxury-crimson transition-all duration-500 ease-out hover:tracking-[0.25em] cursor-pointer font-medium group py-2"
+              >
+                Ready-To-Wear
+                <span className="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-luxury-crimson transition-all duration-355 ease-out -translate-x-1/2 group-hover:w-full"></span>
+              </button>
+            </nav>
+
+            {/* Right Utility Icons */}
+            <div className="flex items-center space-x-5 md:space-x-6" id="header-utilities">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300 cursor-pointer"
+                aria-label="Open search panel"
+              >
+                <Search size={20} />
+              </button>
+              
+              <div className="hidden md:block relative group">
+                <button 
+                  className="text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300 cursor-pointer flex items-center space-x-1"
+                  aria-label="Client account space"
+                >
+                  <User size={20} />
+                </button>
+                
+                {/* Account Dropdown */}
+                <div className="absolute right-0 top-full pt-4 opacity-0 -translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50">
+                  <div className="clay-card p-5 w-64 shadow-2xl flex flex-col rounded-sm">
+                    <div className="border-b border-white/10 pb-3 mb-3">
+                      <span className="mono-label text-luxury-crimson">Maison Elite</span>
+                      <p className="font-serif text-sm font-medium text-luxury-obsidian mt-1 font-semibold">Madame de Beauvoir</p>
+                      <p className="text-[10px] text-luxury-obsidian/45 font-mono mt-0.5">collector_id: #LJC-99082</p>
+                    </div>
+                    <div className="flex flex-col space-y-2 text-xs">
+                      <button className="text-left text-luxury-obsidian/85 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 ease-out">Bespoke Fitting Schedule</button>
+                      <button className="text-left text-luxury-obsidian/85 hover:text-luxury-crimson hover:translate-x-1.5 transition-all duration-300 ease-out">My Wardrobe / Orders</button>
+                      <a href="https://wa.me/254725220195" target="_blank" rel="noopener noreferrer" className="text-left text-luxury-obsidian/85 hover:text-luxury-sand hover:translate-x-1.5 transition-all duration-300 ease-out">Atelier Concierge Chat</a>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Wishlist Button */}
+              <button
+                id="header-wishlist-btn"
+                onClick={onWishlistToggle}
+                className="relative text-luxury-obsidian hover:text-luxury-crimson transition-all duration-300 cursor-pointer flex items-center p-1"
+                aria-label="Open wishlist"
+              >
+                <Heart size={20} className={wishlistCount > 0 ? "fill-luxury-crimson text-luxury-crimson stroke-luxury-crimson" : ""} />
+                <AnimatePresence>
+                  {wishlistCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -top-1 -right-1 bg-luxury-crimson text-white text-[9px] font-mono w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold shadow-md"
+                    >
+                      {wishlistCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+
+              <button
+                id="header-bag-btn"
+                onClick={onCartToggle}
+                className="relative text-luxury-obsidian hover:text-luxury-crimson transition-all duration-300 cursor-pointer flex items-center p-1"
+                aria-label="Open bag"
+              >
+                <ShoppingBag size={20} />
+                <AnimatePresence>
+                  {totalCartCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -top-1 -right-1 bg-luxury-obsidian text-luxury-pearl text-[9px] font-mono w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold shadow-md"
+                    >
+                      {totalCartCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
             </div>
-
-            {/* Wishlist Button */}
-            <button
-              id="header-wishlist-btn"
-              onClick={onWishlistToggle}
-              className="relative text-luxury-obsidian hover:text-luxury-crimson transition-all cursor-pointer flex items-center p-1"
-              aria-label="Open wishlist"
-            >
-              <Heart size={20} className={wishlistCount > 0 ? "fill-red-500 text-red-500 stroke-red-500" : ""} />
-              <AnimatePresence>
-                {wishlistCount > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="absolute -top-1 -right-1 bg-luxury-crimson text-white text-[9px] font-mono w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold"
-                  >
-                    {wishlistCount}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </button>
-
-            <button
-              id="header-bag-btn"
-              onClick={onCartToggle}
-              className="relative text-luxury-obsidian hover:text-luxury-crimson transition-all cursor-pointer flex items-center p-1"
-              aria-label="Open bag"
-            >
-              <ShoppingBag size={20} />
-              <AnimatePresence>
-                {totalCartCount > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="absolute -top-1 -right-1 bg-luxury-obsidian text-white text-[9px] font-mono w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold"
-                  >
-                    {totalCartCount}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </button>
           </div>
         </div>
       </motion.header>
@@ -257,11 +292,11 @@ export default function Header({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#F2F1ED]/95 z-50 flex flex-col justify-center px-6 md:px-24"
+            className="fixed inset-0 bg-luxury-pearl/98 backdrop-blur-2xl z-50 flex flex-col justify-center px-6 md:px-24"
           >
             <button
               onClick={() => setIsSearchOpen(false)}
-              className="absolute top-8 right-8 text-luxury-obsidian hover:text-luxury-crimson transition-colors"
+              className="absolute top-8 right-8 text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300 cursor-pointer"
               aria-label="Close search"
             >
               <X size={28} />
@@ -275,12 +310,12 @@ export default function Header({
                   placeholder="SEARCH THE COLLECTIONS..."
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  className="w-full bg-transparent border-b border-luxury-obsidian py-4 text-xl md:text-3xl font-serif text-luxury-obsidian focus:outline-none placeholder-stone-400/70"
+                  className="w-full bg-transparent border-b border-luxury-obsidian/20 focus:border-luxury-crimson py-4 text-xl md:text-3xl font-serif text-luxury-obsidian focus:outline-none placeholder-luxury-obsidian/30 transition-all duration-500 focus:shadow-[0_4px_20px_-10px_rgba(113,0,20,0.4)]"
                   autoFocus
                 />
                 <button
                   type="submit"
-                  className="absolute right-0 bottom-4 text-luxury-obsidian hover:text-luxury-crimson transition-colors"
+                  className="absolute right-0 bottom-4 text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300 cursor-pointer"
                   aria-label="Submit search query"
                 >
                   <ArrowRight size={24} />
@@ -288,7 +323,7 @@ export default function Header({
               </form>
               
               <div className="mt-8">
-                <p className="text-xs uppercase tracking-widest text-stone-500 mb-3">Suggested Keywords:</p>
+                <p className="text-xs uppercase tracking-widest text-luxury-obsidian/50 mb-3">Suggested Keywords:</p>
                 <div className="flex flex-wrap gap-2">
                   {['Gown', 'Trench', 'Pleated', '18K Gold', 'Silk', 'Accessories'].map((kw) => (
                     <button
@@ -299,7 +334,7 @@ export default function Header({
                         onSearchQuery(kw);
                         setIsSearchOpen(false);
                       }}
-                      className="px-3 py-1.5 border border-stone-200 hover:border-luxury-obsidian text-[11px] uppercase tracking-wider text-luxury-obsidian transition-colors rounded-full"
+                      className="px-4 py-2 border border-white/10 hover:border-luxury-crimson hover:bg-white/5 text-[11px] uppercase tracking-wider text-luxury-obsidian/80 hover:text-luxury-obsidian transition-all duration-355 rounded-full cursor-pointer"
                     >
                       {kw}
                     </button>
@@ -321,7 +356,7 @@ export default function Header({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50"
+              className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50"
             />
             
             {/* Navigation Drawer */}
@@ -330,59 +365,71 @@ export default function Header({
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 180 }}
-              className="fixed top-0 left-0 h-full w-[85%] max-w-[360px] bg-[#F2F1ED] shadow-2xl z-50 p-8 flex flex-col justify-between"
+              className="fixed top-0 left-0 h-full w-[85%] max-w-[360px] bg-luxury-pearl/98 backdrop-blur-xl border-r border-white/5 shadow-2xl z-50 p-8 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between pb-6 border-b border-stone-200/60 mb-8">
+                <div className="flex items-center justify-between pb-6 border-b border-white/10 mb-8">
                   <span className="font-serif tracking-[0.2em] font-bold text-luxury-obsidian">LJ Collective</span>
-                  <button onClick={() => setIsMobileMenuOpen(false)} className="text-luxury-obsidian hover:text-luxury-crimson">
+                  <button onClick={() => setIsMobileMenuOpen(false)} className="text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300">
                     <X size={20} />
                   </button>
                 </div>
 
                 <div className="flex flex-col space-y-6">
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-luxury-crimson block mb-2">Shop Categories</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-luxury-crimson block mb-2 font-semibold">Shop Categories</span>
                     <div className="flex flex-col space-y-4">
                       <button
                         onClick={() => handleNavClick('category', 'all')}
-                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors"
+                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300"
                       >
                         All Masterpieces
                       </button>
                       <button
                         onClick={() => handleNavClick('category', 'haute-couture')}
-                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors"
+                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300"
                       >
                         Haute Couture
                       </button>
                       <button
                         onClick={() => handleNavClick('category', 'ready-to-wear')}
-                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors"
+                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300"
                       >
                         Ready-To-Wear
+                      </button>
+                      <button
+                        onClick={() => handleNavClick('category', 'jewelry')}
+                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300"
+                      >
+                        Jewelry
+                      </button>
+                      <button
+                        onClick={() => handleNavClick('category', 'accessories')}
+                        className="text-left font-serif text-lg text-luxury-obsidian hover:text-luxury-crimson transition-colors duration-300"
+                      >
+                        Accessories
                       </button>
                     </div>
                   </div>
 
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-luxury-crimson block mb-2">Our Collections</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-luxury-crimson block mb-2 font-semibold">Our Collections</span>
                     <div className="flex flex-col space-y-3">
                       <button
                         onClick={() => handleNavClick('collection', 'Summer Atelier')}
-                        className="text-left text-sm text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors"
+                        className="text-left text-sm text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors duration-300"
                       >
                         Summer Atelier
                       </button>
                       <button
                         onClick={() => handleNavClick('collection', 'Winter Silhouette')}
-                        className="text-left text-sm text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors"
+                        className="text-left text-sm text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors duration-300"
                       >
                         Winter Silhouette
                       </button>
                       <button
                         onClick={() => handleNavClick('collection', 'Essential Classic')}
-                        className="text-left text-sm text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors"
+                        className="text-left text-sm text-luxury-obsidian/80 hover:text-luxury-crimson transition-colors duration-300"
                       >
                         Essential Classic
                       </button>
@@ -392,17 +439,17 @@ export default function Header({
               </div>
 
               {/* Mobile Menu Footer Info */}
-              <div className="border-t border-stone-200/60 pt-6">
+              <div className="border-t border-white/10 pt-6">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
                     <User size={14} className="text-luxury-obsidian" />
                   </div>
                   <div>
                     <p className="text-xs font-serif font-medium text-luxury-obsidian">Madame de Beauvoir</p>
-                    <span className="text-[9px] uppercase tracking-[0.1em] text-luxury-crimson font-mono">Maison Elite</span>
+                    <span className="text-[9px] uppercase tracking-[0.1em] text-luxury-crimson font-mono font-semibold">Maison Elite</span>
                   </div>
                 </div>
-                <p className="text-[9px] text-stone-400 uppercase tracking-widest text-center mt-2">© LJ Collective 2026</p>
+                <p className="text-[9px] text-luxury-obsidian/40 uppercase tracking-widest text-center mt-2">© LJ Collective 2026</p>
               </div>
             </motion.div>
           </>

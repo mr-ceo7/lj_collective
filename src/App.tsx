@@ -14,7 +14,7 @@ import ConciergeChat from './components/ConciergeChat';
 import AdminDashboard from './admin/AdminDashboard';
 import { products, reviews } from './data';
 import { Product, CartItem } from './types';
-import { Sparkles, ArrowUp, Scale } from 'lucide-react';
+import { ArrowUp, Scale } from 'lucide-react';
 
 const CART_STORAGE_KEY = 'ljc_cart';
 const WISHLIST_STORAGE_KEY = 'ljc_wishlist';
@@ -275,13 +275,7 @@ export default function App() {
         {/* Fixed screen frame borders for rich magazine feel */}
         <div className="fixed inset-0 pointer-events-none border-[6px] md:border-[12px] border-luxury-pearl z-[45]" />
 
-        {/* Dynamic floating micro announcement bar */}
-        <div className="bg-luxury-obsidian text-luxury-pearl py-2 px-6 flex items-center justify-center text-center space-x-2 relative z-55">
-          <Sparkles size={11} className="text-luxury-sand animate-pulse" />
-          <span className="text-[8.5px] md:text-[9.5px] uppercase tracking-[0.2em] font-mono">
-            Complimentary hand-courier couture delivery on all collectors items. Fitting scheduling available.
-          </span>
-        </div>
+
 
         {/* Global Nav Header */}
         <Header

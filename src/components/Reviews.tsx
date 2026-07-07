@@ -50,11 +50,11 @@ export default function Reviews({ initialReviews }: ReviewsProps) {
   };
 
   return (
-    <section id="reviews" className="w-full py-24 px-6 md:px-12 lg:px-24 bg-luxury-pearl-warm border-t border-b border-stone-200">
+    <section id="reviews" className="w-full py-16 md:py-24 px-6 md:px-12 lg:px-24 bg-luxury-pearl-warm border-t border-b border-white/10">
       <div className="max-w-7xl mx-auto">
         
         {/* Section Heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16 gap-6">
           <div>
             <span className="mono-label text-luxury-crimson block mb-2">Maison Voices 🫶</span>
             <h2 className="font-serif text-3xl md:text-5xl text-luxury-obsidian tracking-wide font-light">
@@ -64,7 +64,7 @@ export default function Reviews({ initialReviews }: ReviewsProps) {
           
           <button
             onClick={() => setIsFormOpen(!isFormOpen)}
-            className="px-5 py-2.5 bg-luxury-obsidian hover:bg-luxury-crimson hover:text-white text-[10px] text-white uppercase tracking-widest transition-colors font-semibold shadow-xs"
+            className="px-5 py-2.5 bg-luxury-crimson hover:bg-luxury-crimson-light text-white text-xs uppercase tracking-widest transition-colors font-semibold shadow-md cursor-pointer"
           >
             {isFormOpen ? 'Close Legacy Form' : 'Submit Appreciation'}
           </button>
@@ -167,7 +167,7 @@ export default function Reviews({ initialReviews }: ReviewsProps) {
 
                     <button
                       type="submit"
-                      className="w-full py-3 bg-luxury-obsidian hover:bg-luxury-crimson text-white text-[10px] uppercase tracking-widest font-semibold transition-colors duration-300 cursor-pointer"
+                      className="w-full py-3.5 bg-luxury-crimson hover:bg-luxury-crimson-light text-white text-xs uppercase tracking-widest font-bold transition-colors duration-300 cursor-pointer shadow-md"
                     >
                       LOG APPRECIATION
                     </button>
@@ -187,10 +187,10 @@ export default function Reviews({ initialReviews }: ReviewsProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="clay-card p-6 flex flex-col justify-between hover:border-luxury-crimson/30 transition-all duration-300 relative group"
+              className="clay-card p-6 flex flex-col justify-between hover:border-luxury-sand/30 border border-white/5 transition-all duration-300 relative group"
             >
               {/* Decorative luxury quote icon in background */}
-              <div className="absolute right-6 top-6 text-luxury-obsidian/5 group-hover:text-luxury-crimson/10 transition-colors pointer-events-none duration-500">
+              <div className="absolute right-6 top-6 text-luxury-obsidian/5 group-hover:text-luxury-sand/10 transition-colors pointer-events-none duration-500">
                 <MessageSquareQuote size={48} />
               </div>
 
@@ -208,8 +208,8 @@ export default function Reviews({ initialReviews }: ReviewsProps) {
                     ))}
                   </div>
                   {review.verified && (
-                    <div className="flex items-center space-x-1 text-[8px] uppercase tracking-wider text-luxury-crimson-light font-mono font-semibold">
-                      <ShieldCheck size={11} />
+                    <div className="flex items-center space-x-1 text-[10px] uppercase tracking-wider text-luxury-sand-light font-mono font-bold">
+                      <ShieldCheck size={12} />
                       <span>Verified Collector</span>
                     </div>
                   )}
@@ -222,21 +222,21 @@ export default function Reviews({ initialReviews }: ReviewsProps) {
               </div>
 
               {/* Author Footer */}
-              <div className="border-t border-stone-200/50 pt-4 mt-auto">
-                <div className="flex justify-between items-end">
+              <div className="border-t border-white/10 pt-4 mt-auto">
+                <div className="flex justify-between items-end gap-2">
                   <div>
-                    <h4 className="text-xs font-serif font-bold text-luxury-obsidian">
+                    <h4 className="text-sm font-serif font-bold text-luxury-obsidian">
                       {review.author}
                     </h4>
-                    <span className="text-[9px] uppercase tracking-wider text-stone-400 font-mono mt-0.5 block">
+                    <span className="text-[10px] uppercase tracking-wider text-stone-400 font-mono mt-0.5 block">
                       {review.location}
                     </span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[8px] uppercase tracking-wider text-luxury-sand font-mono font-medium block">
+                  <div className="text-right flex-shrink-0">
+                    <span className="text-[10px] uppercase tracking-wider text-luxury-sand font-mono font-bold block">
                       {review.itemPurchased}
                     </span>
-                    <span className="text-[8px] font-mono text-stone-400 mt-0.5 block">
+                    <span className="text-[10px] font-mono text-stone-400 mt-0.5 block">
                       {review.date}
                     </span>
                   </div>

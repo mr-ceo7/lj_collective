@@ -133,7 +133,7 @@ export default function ProductQuickView({
             </h3>
             
             <div className="text-lg font-mono text-luxury-obsidian/90 mb-5">
-              ${product.price.toLocaleString()}
+              Ksh {product.price.toLocaleString()}
             </div>
 
             <div className="mb-5 flex flex-wrap items-center gap-2 text-[9px] uppercase tracking-widest font-mono">

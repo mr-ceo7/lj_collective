@@ -182,10 +182,10 @@ export default function FilterDrawer({
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="font-mono text-[9px] uppercase tracking-widest text-stone-400">
-                Price Cap (USD)
+                Price Cap (Ksh)
               </h4>
               <span className="font-mono text-xs font-bold text-luxury-crimson">
-                ${maxPrice.toLocaleString()}
+                Ksh {maxPrice.toLocaleString()}
               </span>
             </div>
             <div className="space-y-2">
@@ -199,9 +199,9 @@ export default function FilterDrawer({
                 className="w-full h-1 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-luxury-crimson"
               />
               <div className="flex justify-between font-mono text-[9px] text-stone-400">
-                <span>$500</span>
-                <span>$3,000</span>
-                <span>$6,000</span>
+                <span>Ksh 500</span>
+                <span>Ksh 3,000</span>
+                <span>Ksh 6,000</span>
               </div>
             </div>
 
@@ -217,7 +217,7 @@ export default function FilterDrawer({
                       : 'border-stone-200 text-stone-500 hover:border-stone-300'
                   }`}
                 >
-                  &lt; ${preset.toLocaleString()}
+                  &lt; Ksh {preset.toLocaleString()}
                 </button>
               ))}
             </div>

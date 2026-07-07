@@ -117,7 +117,7 @@ export default function CompareModal({
                   </td>
                   {comparedProducts.map((product) => (
                     <td key={product.id} className="p-4 text-center font-mono text-sm text-luxury-obsidian font-bold">
-                      ${product.price.toLocaleString()}
+                      Ksh {product.price.toLocaleString()}
                     </td>
                   ))}
                 </tr>

@@ -254,7 +254,7 @@ export default function AdminDashboard() {
                       <td className="p-3 font-serif text-base">{product.name}</td>
                       <td>{product.category}</td>
                       <td>{product.stock}</td>
-                      <td>${product.price.toLocaleString()}</td>
+                      <td>Ksh {product.price.toLocaleString()}</td>
                       <td className="pr-3 text-right">
                         <button onClick={() => handleDeleteProduct(product.id)} className="text-stone-400 hover:text-luxury-crimson" aria-label={`Delete ${product.name}`}>
                           <Trash2 size={15} />

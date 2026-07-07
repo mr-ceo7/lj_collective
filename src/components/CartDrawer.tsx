@@ -66,16 +66,16 @@ export default function CartDrawer({
         className="absolute top-0 right-0 h-full w-full max-w-md bg-luxury-pearl shadow-2xl flex flex-col justify-between"
       >
         {/* Drawer Header */}
-        <div className="p-6 border-b border-stone-200/60 flex items-center justify-between">
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className="font-serif text-lg md:text-xl tracking-wider text-luxury-obsidian font-semibold">
               {step === 'bag' ? 'Your Shopping Bag' : step === 'checkout' ? 'Atelier Checkout' : 'Order Confirmed'}
             </span>
-            <span className="text-xs text-stone-400 font-mono">({cart.length} unique)</span>
+            <span className="text-xs text-luxury-obsidian/50 font-mono">({cart.length} unique)</span>
           </div>
           <button
             onClick={onClose}
-            className="text-luxury-obsidian hover:text-luxury-crimson p-1"
+            className="text-luxury-obsidian hover:text-luxury-crimson p-1 transition-colors duration-300 cursor-pointer"
             aria-label="Close cart drawer"
           >
             <X size={20} />
@@ -97,10 +97,10 @@ export default function CartDrawer({
               >
                 {cart.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-24 text-center">
-                    <p className="font-serif italic text-stone-400 text-lg mb-6">Your shopping bag is empty.</p>
+                    <p className="font-serif italic text-luxury-obsidian/40 text-lg mb-6">Your shopping bag is empty.</p>
                     <button
                       onClick={onClose}
-                      className="px-6 py-2 bg-luxury-obsidian hover:bg-luxury-crimson text-white text-[10px] uppercase tracking-widest transition-colors font-semibold"
+                      className="px-6 py-2.5 bg-luxury-obsidian hover:bg-luxury-crimson text-luxury-pearl hover:text-white text-[10px] uppercase tracking-widest transition-all duration-300 font-semibold rounded-xs shadow-md cursor-pointer"
                     >
                       Return to Showroom
                     </button>
@@ -110,10 +110,10 @@ export default function CartDrawer({
                     {cart.map((item) => (
                       <div
                         key={`${item.product.id}-${item.selectedSize}`}
-                        className="flex items-start pb-6 border-b border-stone-200/40"
+                        className="flex items-start pb-6 border-b border-white/5"
                       >
                         {/* Image Thumbnail */}
-                        <div className="w-20 aspect-[3/4] bg-stone-100 overflow-hidden flex-shrink-0 border border-stone-200/50">
+                        <div className="w-20 aspect-[3/4] bg-white/5 overflow-hidden flex-shrink-0 border border-white/10">
                           <img
                             src={item.product.images[0]}
                             alt={item.product.name}
@@ -131,20 +131,20 @@ export default function CartDrawer({
                               </h4>
                               <button
                                 onClick={() => onRemoveItem(item.product.id, item.selectedSize)}
-                                className="text-stone-400 hover:text-rose-600 pl-2 transition-colors"
+                                className="text-luxury-obsidian/40 hover:text-luxury-crimson pl-2 transition-colors duration-300 cursor-pointer"
                                 aria-label="Remove item"
                               >
                                 <Trash2 size={14} />
                               </button>
                             </div>
-                            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-mono mt-0.5 block">
+                            <span className="text-[10px] uppercase tracking-widest text-luxury-obsidian/50 font-mono mt-0.5 block">
                               Size: <span className="text-luxury-obsidian font-bold font-mono">{item.selectedSize}</span>
                             </span>
-                            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-mono block">
+                            <span className="text-[10px] uppercase tracking-widest text-luxury-obsidian/50 font-mono block">
                               Collection: <span className="text-luxury-obsidian/80 font-mono">{item.product.collection}</span>
                             </span>
-                            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-mono block">
-                              Availability: <span className={item.quantity >= item.product.stock ? 'text-luxury-crimson font-bold' : 'text-luxury-obsidian/80'}>
+                            <span className="text-[10px] uppercase tracking-widest text-luxury-obsidian/50 font-mono block">
+                              Availability: <span className={item.quantity >= item.product.stock ? 'text-luxury-crimson font-bold' : 'text-luxury-obsidian/85'}>
                                 {item.product.stock - item.quantity} remaining after this bag
                               </span>
                             </span>
@@ -152,18 +152,18 @@ export default function CartDrawer({
 
                           <div className="flex items-center justify-between mt-3">
                             {/* Quantity Selector Counter */}
-                            <div className="flex items-center border border-stone-200 bg-white">
+                            <div className="flex items-center border border-white/10 bg-white/5 rounded-xs">
                               <button
                                 onClick={() => onUpdateQuantity(item.product.id, item.selectedSize, -1)}
-                                className="px-2 py-1 text-xs hover:bg-stone-100 text-luxury-obsidian"
+                                className="px-2 py-1 text-xs hover:bg-white/10 text-luxury-obsidian transition-colors cursor-pointer"
                               >
                                 -
                               </button>
-                              <span className="px-3 text-xs font-mono font-medium">{item.quantity}</span>
+                              <span className="px-3 text-xs font-mono text-luxury-obsidian font-medium">{item.quantity}</span>
                               <button
                                 onClick={() => onUpdateQuantity(item.product.id, item.selectedSize, 1)}
                                 disabled={item.quantity >= item.product.stock}
-                                className="px-2 py-1 text-xs hover:bg-stone-100 text-luxury-obsidian disabled:text-stone-300 disabled:cursor-not-allowed"
+                                className="px-2 py-1 text-xs hover:bg-white/10 text-luxury-obsidian disabled:text-luxury-obsidian/25 disabled:cursor-not-allowed transition-colors cursor-pointer"
                                 aria-label={`Increase quantity for ${item.product.name}`}
                               >
                                 +
@@ -171,7 +171,7 @@ export default function CartDrawer({
                             </div>
                             {/* Price total for item */}
                             <span className="text-xs font-mono text-luxury-obsidian font-medium">
-                              ${(item.product.price * item.quantity).toLocaleString()}
+                              Ksh {(item.product.price * item.quantity).toLocaleString()}
                             </span>
                           </div>
                         </div>
@@ -192,7 +192,7 @@ export default function CartDrawer({
               >
                 <button
                   onClick={() => setStep('bag')}
-                  className="inline-flex items-center space-x-1.5 text-xs text-stone-500 hover:text-luxury-obsidian mb-6"
+                  className="inline-flex items-center space-x-1.5 text-xs text-luxury-obsidian/50 hover:text-luxury-crimson mb-6 transition-colors duration-300 cursor-pointer"
                 >
                   <ArrowLeft size={12} />
                   <span>Back to shopping bag</span>
@@ -200,7 +200,7 @@ export default function CartDrawer({
 
                 <form onSubmit={handleCheckoutSubmit} className="space-y-4">
                   <div>
-                    <label className="mono-label text-[9px] text-stone-400 block mb-1">
+                    <label className="mono-label text-[9px] text-luxury-obsidian/50 block mb-1">
                       Full Client Name *
                     </label>
                     <input
@@ -209,12 +209,12 @@ export default function CartDrawer({
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. Amandine de Beauvoir"
-                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-stone-500"
+                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-luxury-obsidian/30"
                     />
                   </div>
 
                   <div>
-                    <label className="mono-label text-[9px] text-stone-400 block mb-1">
+                    <label className="mono-label text-[9px] text-luxury-obsidian/50 block mb-1">
                       Maison Email Address *
                     </label>
                     <input
@@ -223,12 +223,12 @@ export default function CartDrawer({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. amandine@couture.fr"
-                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-stone-500"
+                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-luxury-obsidian/30"
                     />
                   </div>
 
                   <div>
-                    <label className="mono-label text-[9px] text-stone-400 block mb-1">
+                    <label className="mono-label text-[9px] text-luxury-obsidian/50 block mb-1">
                       Delivery Sanctuary Address *
                     </label>
                     <textarea
@@ -237,12 +237,12 @@ export default function CartDrawer({
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="e.g. 14 Rue du Faubourg Saint-Honoré, Paris"
-                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-stone-500 resize-none"
+                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-luxury-obsidian/30 resize-none"
                     />
                   </div>
 
                   <div>
-                    <label className="mono-label text-[9px] text-stone-400 block mb-1">
+                    <label className="mono-label text-[9px] text-luxury-obsidian/50 block mb-1">
                       Complimentary Handwritten Gift Inscription (Optional)
                     </label>
                     <textarea
@@ -250,53 +250,53 @@ export default function CartDrawer({
                       value={giftNote}
                       onChange={(e) => setGiftNote(e.target.value)}
                       placeholder="Write an elegant gift inscription to be hand-penned on linen card..."
-                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-stone-500 resize-none italic"
+                      className="w-full clay-input px-3 py-2 text-xs focus:outline-none placeholder-luxury-obsidian/30 resize-none italic"
                     />
                   </div>
 
                   {/* Payment Choices */}
                   <div>
-                    <label className="mono-label text-[9px] text-stone-400 block mb-3">
+                    <label className="mono-label text-[9px] text-luxury-obsidian/50 block mb-3">
                       Bespoke Settling Method *
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('card')}
-                        className={`p-3 border text-center flex flex-col items-center justify-center cursor-pointer transition-all ${
+                        className={`p-3 border text-center flex flex-col items-center justify-center cursor-pointer transition-all rounded-xs ${
                           paymentMethod === 'card'
-                            ? 'border-luxury-obsidian bg-stone-50'
-                            : 'border-stone-200 hover:border-luxury-crimson'
+                            ? 'border-luxury-crimson bg-luxury-crimson/10 text-luxury-obsidian'
+                            : 'border-white/10 hover:border-luxury-crimson/55 bg-white/5 text-luxury-obsidian/60'
                         }`}
                       >
-                        <CreditCard size={16} className="text-luxury-obsidian mb-1" />
-                        <span className="text-[10px] font-serif font-medium text-luxury-obsidian">Secure Card</span>
+                        <CreditCard size={16} className={`mb-1 transition-colors ${paymentMethod === 'card' ? 'text-luxury-crimson' : 'text-luxury-obsidian/60'}`} />
+                        <span className="text-[10px] font-serif font-medium">Secure Card</span>
                       </button>
                       
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('concierge')}
-                        className={`p-3 border text-center flex flex-col items-center justify-center cursor-pointer transition-all ${
+                        className={`p-3 border text-center flex flex-col items-center justify-center cursor-pointer transition-all rounded-xs ${
                           paymentMethod === 'concierge'
-                            ? 'border-luxury-obsidian bg-stone-50'
-                            : 'border-stone-200 hover:border-luxury-crimson'
+                            ? 'border-luxury-crimson bg-luxury-crimson/10 text-luxury-obsidian'
+                            : 'border-white/10 hover:border-luxury-crimson/55 bg-white/5 text-luxury-obsidian/60'
                         }`}
                       >
-                        <Sparkles size={16} className="text-luxury-crimson mb-1" />
-                        <span className="text-[10px] font-serif font-medium text-luxury-obsidian">Atelier Concierge</span>
+                        <Sparkles size={16} className={`mb-1 transition-colors ${paymentMethod === 'concierge' ? 'text-luxury-crimson' : 'text-luxury-obsidian/60'}`} />
+                        <span className="text-[10px] font-serif font-medium">Atelier Concierge</span>
                       </button>
                     </div>
                   </div>
 
                   {/* Payment assurances */}
-                  <p className="text-[9px] text-stone-400 leading-relaxed font-sans mt-2 italic text-center">
+                  <p className="text-[9px] text-luxury-obsidian/40 leading-relaxed font-sans mt-2 italic text-center">
                     Payment authorization must be connected to your production payment provider before launch.
                   </p>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 bg-luxury-obsidian hover:bg-luxury-crimson text-white text-[10px] uppercase tracking-widest font-semibold mt-4 transition-colors duration-300 cursor-pointer flex items-center justify-center space-x-2"
+                    className="w-full py-3.5 bg-luxury-obsidian hover:bg-luxury-crimson text-luxury-pearl hover:text-white text-[10px] uppercase tracking-widest font-semibold mt-4 transition-all duration-300 cursor-pointer flex items-center justify-center space-x-2 rounded-xs shadow-md"
                   >
                     {isSubmitting ? (
                       <span>TRANSMITTING ORDER DETAILS...</span>
@@ -320,7 +320,7 @@ export default function CartDrawer({
                 exit={{ opacity: 0 }}
                 className="text-center py-16 px-4 flex flex-col items-center justify-center"
               >
-                <div className="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center text-luxury-crimson mb-6 border border-stone-200/50">
+                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-luxury-crimson mb-6 border border-white/10">
                   <Sparkles size={28} />
                 </div>
                 
@@ -333,8 +333,8 @@ export default function CartDrawer({
                   Your request has been delivered directly to our lead master artisan. A personal Atelier fitting specialist will contact you in the next 15 minutes to review measurements, customize drapes, and schedule white-glove hand delivery.
                 </p>
 
-                <div className="border border-stone-200 p-4 w-full text-left space-y-2 mb-8 bg-stone-50">
-                  <span className="text-[9px] uppercase tracking-widest text-stone-400 font-mono block">Order Details:</span>
+                <div className="border border-white/10 p-4 w-full text-left space-y-2 mb-8 bg-white/5 rounded-xs">
+                  <span className="text-[9px] uppercase tracking-widest text-luxury-obsidian/40 font-mono block">Order Details:</span>
                   <div className="flex justify-between text-xs text-luxury-obsidian font-medium">
                     <span>Atelier Tracking:</span>
                     <span className="font-mono text-[11px] font-bold text-luxury-crimson-light">#LJC-2026-099827</span>
@@ -354,7 +354,7 @@ export default function CartDrawer({
                     setStep('bag');
                     onClose();
                   }}
-                  className="px-8 py-3 bg-luxury-obsidian hover:bg-luxury-crimson text-luxury-pearl text-[10px] uppercase tracking-widest transition-colors font-medium cursor-pointer"
+                  className="px-8 py-3 bg-luxury-obsidian hover:bg-luxury-crimson text-luxury-pearl hover:text-white text-[10px] uppercase tracking-widest transition-all duration-300 font-medium cursor-pointer rounded-xs shadow-md"
                 >
                   Continue Browsing
                 </button>
@@ -365,29 +365,29 @@ export default function CartDrawer({
 
         {/* Drawer Footer calculations block (Only visible on Step 1 / bag review) */}
         {step === 'bag' && cart.length > 0 && (
-          <div className="p-6 border-t border-stone-200 bg-stone-50/50 flex flex-col">
+          <div className="p-6 border-t border-white/10 bg-white/5 flex flex-col">
             <div className="space-y-1.5 mb-6">
-              <div className="flex justify-between text-xs text-stone-500">
+              <div className="flex justify-between text-xs text-luxury-obsidian/60">
                 <span>Atelier Subtotal</span>
-                <span className="font-mono">${subtotal.toLocaleString()}</span>
+                <span className="font-mono text-luxury-obsidian">Ksh {subtotal.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-xs text-stone-500">
+              <div className="flex justify-between text-xs text-luxury-obsidian/60">
                 <span>Couture VAT / luxury levy (8%)</span>
-                <span className="font-mono">${luxuryTax.toLocaleString()}</span>
+                <span className="font-mono text-luxury-obsidian">Ksh {luxuryTax.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-xs text-stone-500">
+              <div className="flex justify-between text-xs text-luxury-obsidian/60">
                 <span>Luxury White-Glove Courier</span>
                 <span className="text-luxury-crimson text-[10px] uppercase tracking-widest font-bold">COMPLIMENTARY</span>
               </div>
-              <div className="border-t border-stone-200 my-2 pt-2 flex justify-between text-sm text-luxury-obsidian font-bold">
+              <div className="border-t border-white/15 my-2 pt-2 flex justify-between text-sm text-luxury-obsidian font-bold">
                 <span className="font-serif">Total Est. Balance</span>
-                <span className="font-mono">${grandTotal.toLocaleString()}</span>
+                <span className="font-mono text-luxury-obsidian">Ksh {grandTotal.toLocaleString()}</span>
               </div>
             </div>
 
             <button
               onClick={() => setStep('checkout')}
-              className="w-full py-3.5 bg-luxury-obsidian hover:bg-luxury-crimson text-white text-[10px] uppercase tracking-widest font-semibold transition-colors duration-300 cursor-pointer flex items-center justify-center space-x-1"
+              className="w-full py-4 bg-luxury-crimson hover:bg-luxury-crimson-light text-white text-xs uppercase tracking-widest font-bold transition-all duration-300 cursor-pointer flex items-center justify-center space-x-1 rounded-xs shadow-md"
             >
               <span>PROCEED TO SARTORIAL CHECKOUT</span>
               <ArrowRight size={13} />

@@ -99,7 +99,7 @@ export default function Showroom({
   };
 
   return (
-    <section id="showroom" className="w-full py-24 px-6 md:px-12 lg:px-24 bg-luxury-pearl border-t border-stone-200/50">
+    <section id="showroom" className="w-full py-16 md:py-24 px-6 md:px-12 lg:px-24 bg-luxury-pearl border-t border-stone-200/50">
       <div className="max-w-7xl mx-auto">
         
         {/* Header Block */}
@@ -108,7 +108,7 @@ export default function Showroom({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16 gap-6"
         >
           <div>
             <span className="mono-label text-luxury-crimson block mb-2">The Collection Showroom</span>
@@ -134,18 +134,18 @@ export default function Showroom({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-stone-200/80 pb-6 mb-12 gap-6"
+          className="flex flex-col lg:flex-row justify-between items-start lg:items-center border-b border-white/10 pb-4 lg:pb-6 mb-8 lg:mb-12 gap-4 lg:gap-6 w-full min-w-0"
         >
           {/* Category Tabs */}
-          <div className="flex flex-wrap gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-none">
+          <div className="flex flex-nowrap overflow-x-auto pb-3 lg:pb-0 w-full min-w-0 lg:w-auto scrollbar-none gap-2.5 flex-shrink-0">
             {categoriesList.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`px-5 py-2.5 text-[9px] uppercase tracking-widest transition-all whitespace-nowrap rounded-full cursor-pointer ${
+                className={`px-5 py-3 text-xs uppercase tracking-widest transition-all whitespace-nowrap rounded-full cursor-pointer ${
                   selectedCategory === cat.id
                     ? 'clay-btn-active font-semibold shadow-md'
-                    : 'clay-btn text-luxury-obsidian/80 hover:text-luxury-obsidian'
+                    : 'clay-btn text-luxury-obsidian/85 hover:text-luxury-obsidian'
                 }`}
               >
                 {cat.name}
@@ -154,9 +154,9 @@ export default function Showroom({
           </div>
 
           {/* Collection Filter & Advanced Refinement */}
-          <div className="flex flex-wrap items-center gap-4 w-full md:w-auto justify-end">
-            <div className="flex items-center space-x-3">
-              <span className="text-[10px] uppercase tracking-widest text-stone-400 font-mono">Collection:</span>
+          <div className="flex flex-row items-center justify-between lg:justify-end gap-6 w-full lg:w-auto pt-2 lg:pt-0 flex-shrink-0">
+            <div className="flex items-center space-x-2">
+              <span className="text-[11px] uppercase tracking-widest text-luxury-obsidian/60 font-mono">Collection:</span>
               <select
                 value={selectedCollection}
                 onChange={(e) => onSelectCollection(e.target.value)}
@@ -173,7 +173,7 @@ export default function Showroom({
             <button
               id="showroom-refine-btn"
               onClick={() => setIsFilterDrawerOpen(true)}
-              className="flex items-center space-x-2 px-4 py-2 border border-stone-200 hover:border-luxury-crimson/50 text-luxury-obsidian hover:text-luxury-crimson text-xs font-mono uppercase tracking-widest transition-all rounded-xs cursor-pointer bg-white/50 backdrop-blur-xs"
+              className="flex items-center space-x-2 px-5 py-2.5 border border-white/10 hover:border-luxury-crimson/50 text-luxury-obsidian hover:text-luxury-crimson text-xs font-mono uppercase tracking-widest transition-all rounded-full cursor-pointer bg-white/5 backdrop-blur-xs shadow-xs"
             >
               <SlidersHorizontal size={12} className="text-luxury-crimson" />
               <span>Refine</span>
@@ -211,7 +211,7 @@ export default function Showroom({
           ) : (
             <motion.div 
               layout
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 lg:gap-y-24"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-10 sm:gap-y-16 lg:gap-y-24"
             >
               {filteredProducts.map((product, index) => {
                 const isHovered = hoveredProductId === product.id;
@@ -280,32 +280,32 @@ export default function Showroom({
 
                       {/* Collection / Category Badge */}
                       <div className="absolute top-4 left-4 flex flex-col space-y-1.5 pointer-events-none">
-                        <span className="px-2 py-1 bg-luxury-pearl/90 border border-stone-200/30 text-[8px] uppercase tracking-widest text-luxury-obsidian font-mono shadow-xs">
+                        <span className="px-2 py-1 bg-luxury-pearl/90 border border-white/10 text-[8px] uppercase tracking-widest text-luxury-obsidian font-mono shadow-xs">
                           {product.collection}
                         </span>
                         {product.featured && (
-                          <span className="px-2 py-1 bg-luxury-obsidian text-white text-[8px] uppercase tracking-widest font-mono text-center shadow-xs">
+                          <span className="px-2 py-1 bg-luxury-sand border border-luxury-sand-dark/25 text-stone-950 text-[8px] uppercase tracking-widest font-mono font-bold text-center shadow-xs">
                             Atelier Focus
                           </span>
                         )}
                       </div>
 
                       {/* Hover Interaction Overlay */}
-                      <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-between opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300">
+                      <div className="absolute inset-x-0 bottom-0 p-2 sm:p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-row items-center justify-between opacity-100 sm:opacity-0 sm:group-hover:opacity-100 translate-y-0 sm:translate-y-2 sm:group-hover:translate-y-0 transition-all duration-300 gap-1 sm:gap-2 z-10">
                         <button
                           onClick={() => onQuickView(product)}
-                          className="flex items-center space-x-1.5 text-white hover:text-luxury-crimson transition-colors text-[10px] uppercase tracking-widest font-medium cursor-pointer"
+                          className="flex items-center justify-center space-x-1 px-2 py-1.5 sm:px-3.5 sm:py-2 bg-[#0F0F0F]/65 hover:bg-[#0F0F0F]/90 border border-white/15 text-[8px] sm:text-[10px] uppercase tracking-widest text-white font-semibold transition-all rounded-full cursor-pointer backdrop-blur-xs shrink-0"
                         >
-                          <Eye size={13} />
+                          <Eye size={10} className="sm:w-3 sm:h-3" />
                           <span>Quick View</span>
                         </button>
                         
                         <button
                           onClick={() => onAddToBag(product, product.sizes[0])}
                           disabled={product.stock <= 0}
-                          className="flex items-center space-x-1.5 text-white hover:text-luxury-crimson transition-colors text-[10px] uppercase tracking-widest font-medium cursor-pointer"
+                          className="flex items-center justify-center space-x-1 px-2 py-1.5 sm:px-3.5 sm:py-2 bg-luxury-obsidian text-luxury-pearl hover:bg-luxury-sand hover:text-white disabled:bg-stone-600 disabled:text-stone-400 text-[8px] sm:text-[10px] uppercase tracking-widest font-bold transition-all rounded-full cursor-pointer shadow-sm shrink-0"
                         >
-                          <Plus size={13} />
+                          <Plus size={10} className="sm:w-3 sm:h-3" />
                           <span>{product.stock > 0 ? 'Add Bag' : 'Reserved'}</span>
                         </button>
                       </div>
@@ -313,18 +313,18 @@ export default function Showroom({
 
                     {/* Metadata Detail Block */}
                     <div className="flex flex-col">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-serif text-base text-luxury-obsidian group-hover:text-luxury-crimson transition-colors font-medium">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-0">
+                        <h3 className="font-serif text-xs sm:text-base text-luxury-obsidian group-hover:text-luxury-sand-light transition-colors duration-300 font-medium">
                           <button onClick={() => onQuickView(product)} className="text-left focus:outline-none">
                             {product.name}
                           </button>
                         </h3>
-                        <span className="text-sm text-luxury-obsidian/90 font-mono pl-3">
-                          ${product.price.toLocaleString()}
+                        <span className="text-sm sm:text-base font-semibold text-luxury-obsidian font-mono">
+                          Ksh {product.price.toLocaleString()}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between mt-1.5 border-t border-stone-200/40 pt-2">
-                        <span className="text-[10px] uppercase tracking-widest text-stone-400 font-mono">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 border-t border-white/10 pt-2 items-start gap-1 sm:gap-0">
+                        <span className="text-[9px] sm:text-[11px] uppercase tracking-widest text-luxury-sand-light/90 font-mono font-medium">
                           {product.category.replace('-', ' ')}
                         </span>
                         
@@ -334,26 +334,26 @@ export default function Showroom({
                             e.stopPropagation();
                             onToggleCompare(product.id);
                           }}
-                          className={`text-[9px] uppercase tracking-widest font-mono flex items-center space-x-1 cursor-pointer bg-transparent border-none p-0 transition-all ${
+                          className={`text-[9px] sm:text-[10px] uppercase tracking-widest font-mono flex items-center space-x-1 px-2.5 py-1 border rounded-full transition-all duration-300 cursor-pointer ${
                             isCompared
-                              ? 'text-luxury-crimson font-semibold'
-                              : 'text-stone-400 hover:text-luxury-obsidian'
+                              ? 'bg-luxury-sand/20 border-luxury-sand text-luxury-sand font-medium'
+                              : 'bg-white/5 border-white/15 text-luxury-obsidian/75 hover:bg-white/10 hover:border-luxury-sand/40 hover:text-luxury-sand'
                           }`}
                         >
-                          <Scale size={11} className={isCompared ? 'text-luxury-crimson animate-pulse' : 'text-stone-400'} />
+                          <Scale size={10} className={isCompared ? 'text-luxury-sand animate-pulse' : 'text-luxury-obsidian/50'} />
                           <span>{isCompared ? 'Compared' : 'Compare'}</span>
                         </button>
                       </div>
                       
-                      <div className="flex items-center justify-between mt-1 text-[9px] text-stone-400 font-mono">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-1.5 text-[9px] sm:text-[11px] text-luxury-obsidian/60 font-mono gap-0.5 sm:gap-0">
                         <span>Sizes:</span>
                         <span>{product.sizes.join(', ')}</span>
                       </div>
-                      <div className="flex items-center justify-between mt-2 text-[9px] uppercase tracking-widest font-mono">
-                        <span className={product.stock <= 3 ? 'text-luxury-crimson' : 'text-stone-400'}>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 text-[8px] sm:text-[10px] uppercase tracking-wider font-mono gap-1 sm:gap-0">
+                        <span className={product.stock <= 3 ? 'text-red-500 font-bold' : 'text-luxury-obsidian/60'}>
                           {product.stock > 0 ? `${product.stock} available` : 'Fully reserved'}
                         </span>
-                        <span className="text-stone-500">Insured delivery</span>
+                        <span className="text-luxury-obsidian/45">Insured delivery</span>
                       </div>
                     </div>
                   </motion.div>

@@ -14,32 +14,32 @@ interface LookbookItem {
 const lookbookItems: LookbookItem[] = [
   {
     id: 'lb1',
-    image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=80',
-    title: 'The Organza Study',
-    tag: 'Haute Couture',
+    image: '/assets/SaveClip.App_726247220_18412051285196378_8868740418072431020_n.jpg',
+    title: 'Sculpted Silk Drape',
+    tag: 'Summer Atelier',
     alignment: 'top-12 left-6 md:top-24 md:left-[5%]',
     depth: 45,
   },
   {
     id: 'lb2',
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80',
-    title: 'Sartorial Yellow Gown',
-    tag: 'Collection 2026',
+    image: '/assets/SaveClip.App_624834568_18017954063804569_8949826810407604632_n.jpg',
+    title: 'Atelier Velvet Gown',
+    tag: 'Haute Couture',
     alignment: 'bottom-8 left-12 md:bottom-16 md:left-[22%]',
     depth: -30,
   },
   {
     id: 'lb3',
-    image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80',
-    title: 'Architectural Pleating',
+    image: '/assets/SaveClip.App_722933692_17939682528252474_6588271153929750448_n.jpg',
+    title: 'Gold Filigree Embroidery',
     tag: 'Bespoke Craft',
     alignment: 'top-8 right-6 md:top-16 md:right-[15%]',
     depth: 60,
   },
   {
     id: 'lb4',
-    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=80',
-    title: 'Heavy Wool Silhouette',
+    image: '/assets/SaveClip.App_726380751_18412051270196378_903608071847032010_n.jpg',
+    title: 'Structured Silhouette',
     tag: 'Winter Tailoring',
     alignment: 'bottom-16 right-12 md:bottom-28 md:right-[5%]',
     depth: -20,
@@ -153,7 +153,7 @@ export default function FloatingLookbook() {
           transition={{ duration: 0.8 }}
           className="mono-label text-luxury-crimson-light mb-3"
         >
-          Curated Visual Space
+          Curated Atelier Space
         </motion.span>
         
         <motion.h2 
@@ -173,7 +173,7 @@ export default function FloatingLookbook() {
           transition={{ duration: 1, delay: 0.2 }}
           className="text-xs md:text-sm font-sans tracking-wide text-luxury-obsidian/80 mb-8 max-w-sm md:max-w-md leading-relaxed text-center"
         >
-          Hover and glide over the canvas. An tactile dialogue with materials, light volumes, and structured drapes of our inaugural collection.
+          Hover and glide across the canvas. A tactile dialogue with exquisite materials, architectural volumes, and hand-finished drapings from our inaugural collections.
         </motion.p>
 
         <motion.button

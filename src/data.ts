@@ -5,21 +5,21 @@ export const collections: Collection[] = [
     id: 'summer-atelier',
     name: 'Summer Atelier',
     tagline: 'Sun-drenched luxury in hand-woven organza and fluid silk drapings.',
-    image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/SaveClip.App_731769807_17943153426252474_5056458473949518396_n.jpg',
     description: 'An exploration of light, shadow, and lightweight structure. Inspired by the warmth of Mediterranean afternoons, each piece is a celebration of relaxed sophistication and effortless movement.'
   },
   {
     id: 'winter-silhouette',
     name: 'Winter Silhouette',
     tagline: 'Tailored architectural wools and heavy satin eveningwear.',
-    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/SaveClip.App_726380751_18412051270196378_903608071847032010_n.jpg',
     description: 'Bespoke tailoring meets high-density warmth. This collection focuses on dramatic silhouettes, structural collars, and double-faced premium cashmere to guard against the elements with ultimate grace.'
   },
   {
     id: 'essential-classic',
     name: 'Essential Classic',
     tagline: 'The foundation of the modern collectors wardrobe.',
-    image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/SaveClip.App_724639925_17939682540252474_5962682449502193868_n.jpg',
     description: 'Timeless masterpieces designed to transcend seasonal trends. Hand-finished details, impeccable seams, and luxurious raw textiles that form the core signature of LJ Collective.'
   }
 ];
@@ -41,8 +41,8 @@ export const products: Product[] = [
     ],
     sizes: ['FR 34', 'FR 36', 'FR 38', 'FR 40', 'FR 42'],
     images: [
-      'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80'
+      '/assets/SaveClip.App_731769807_17943153426252474_5056458473949518396_n.jpg',
+      '/assets/SaveClip.App_655060660_18090079324917413_3092540149964147636_n.jpg'
     ],
     stock: 5,
     featured: true,
@@ -65,8 +65,8 @@ export const products: Product[] = [
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     images: [
-      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80'
+      '/assets/SaveClip.App_726380751_18412051270196378_903608071847032010_n.jpg',
+      '/assets/SaveClip.App_726220492_18412051288196378_5070443709924620382_n.jpg'
     ],
     stock: 8,
     featured: true,
@@ -89,8 +89,8 @@ export const products: Product[] = [
     ],
     sizes: ['FR 34', 'FR 36', 'FR 38', 'FR 40'],
     images: [
-      'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80'
+      '/assets/SaveClip.App_620992128_17955701148055842_8542658560222115683_n.jpg',
+      '/assets/SaveClip.App_625173336_18063339989310108_4452945432123209089_n.jpg'
     ],
     stock: 3,
     featured: true,
@@ -113,8 +113,8 @@ export const products: Product[] = [
     ],
     sizes: ['FR 36', 'FR 38', 'FR 40', 'FR 42'],
     images: [
-      'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?auto=format&fit=crop&w=800&q=80'
+      '/assets/SaveClip.App_624834568_18017954063804569_8949826810407604632_n.jpg',
+      '/assets/SaveClip.App_623758730_18076782257608947_7818919390501333055_n.jpg'
     ],
     stock: 4,
     featured: false,
@@ -137,8 +137,8 @@ export const products: Product[] = [
     ],
     sizes: ['FR 34', 'FR 36', 'FR 38', 'FR 40'],
     images: [
-      'https://images.unsplash.com/photo-1549064482-6779ba329226?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1518764871604-ed411131a76f?auto=format&fit=crop&w=800&q=80'
+      '/assets/SaveClip.App_726247220_18412051285196378_8868740418072431020_n.jpg',
+      '/assets/SaveClip.App_655060660_18090079324917413_3092540149964147636_n.jpg'
     ],
     stock: 12,
     featured: false,
@@ -161,8 +161,8 @@ export const products: Product[] = [
     ],
     sizes: ['XS', 'S', 'M', 'L'],
     images: [
-      'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80'
+      '/assets/burgundy-blazer.png',
+      '/assets/SaveClip.App_724639925_17939682540252474_5962682449502193868_n.jpg'
     ],
     stock: 7,
     featured: true,
@@ -185,8 +185,8 @@ export const products: Product[] = [
     ],
     sizes: ['One Size'],
     images: [
-      'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=800&q=80'
+      '/assets/SaveClip.App_726220492_18412051288196378_5070443709924620382_n.jpg',
+      '/assets/SaveClip.App_726247220_18412051285196378_8868740418072431020_n.jpg'
     ],
     stock: 25,
     featured: false,
@@ -209,8 +209,8 @@ export const products: Product[] = [
     ],
     sizes: ['38 cm', '40 cm'],
     images: [
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80'
+      '/assets/SaveClip.App_722933692_17939682528252474_6588271153929750448_n.jpg',
+      '/assets/SaveClip.App_723509676_17939682516252474_815792825851951841_n.jpg'
     ],
     stock: 3,
     featured: true,

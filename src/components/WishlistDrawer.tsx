@@ -30,7 +30,7 @@ export default function WishlistDrawer({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-luxury-obsidian/35 backdrop-blur-xs pointer-events-auto"
+        className="absolute inset-0 bg-black/60 backdrop-blur-xs pointer-events-auto"
       />
 
       {/* Drawer Panel */}
@@ -42,19 +42,19 @@ export default function WishlistDrawer({
         className="absolute top-0 right-0 h-full w-full max-w-md bg-luxury-pearl shadow-2xl flex flex-col justify-between pointer-events-auto"
       >
         {/* Drawer Header */}
-        <div className="p-6 border-b border-stone-200/60 flex items-center justify-between">
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Heart size={16} className="text-luxury-crimson fill-luxury-crimson" />
             <h3 className="font-serif text-lg tracking-wider uppercase text-luxury-obsidian font-medium">
               Your Wishlist
             </h3>
-            <span className="text-[10px] bg-luxury-obsidian/5 px-2 py-0.5 rounded-full font-mono text-stone-500">
+            <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-mono text-luxury-obsidian/50">
               {wishlistedProducts.length}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="text-luxury-obsidian/70 hover:text-luxury-crimson transition-colors cursor-pointer p-1"
+            className="text-luxury-obsidian/70 hover:text-luxury-crimson transition-colors duration-300 cursor-pointer p-1"
             aria-label="Close wishlist"
           >
             <X size={18} />
@@ -71,14 +71,14 @@ export default function WishlistDrawer({
                 exit={{ opacity: 0, y: -10 }}
                 className="h-[60vh] flex flex-col items-center justify-center text-center px-4"
               >
-                <Heart size={32} className="text-stone-300 stroke-[1.2] mb-4" />
-                <p className="font-serif text-base italic text-luxury-obsidian">Your archive is currently empty</p>
-                <p className="text-xs text-stone-500 max-w-xs mt-2 leading-relaxed">
+                <Heart size={32} className="text-luxury-obsidian/20 stroke-[1.2] mb-4" />
+                <p className="font-serif text-base italic text-luxury-obsidian/60">Your archive is currently empty</p>
+                <p className="text-xs text-luxury-obsidian/40 max-w-xs mt-2 leading-relaxed">
                   Discover outstanding silhouettes in our collection and tap the heart icon to save them to your private list.
                 </p>
                 <button
                   onClick={onClose}
-                  className="mt-6 px-6 py-2.5 bg-luxury-obsidian hover:bg-luxury-crimson text-luxury-pearl text-[9px] uppercase tracking-widest transition-colors font-mono rounded-xs"
+                  className="mt-6 px-6 py-2.5 bg-luxury-obsidian hover:bg-luxury-crimson text-luxury-pearl hover:text-white text-[9px] uppercase tracking-widest transition-all duration-300 font-mono rounded-xs shadow-md cursor-pointer"
                 >
                   Explore Collection
                 </button>
@@ -92,7 +92,7 @@ export default function WishlistDrawer({
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
-                    className="flex items-center space-x-4 border-b border-stone-100 pb-4"
+                    className="flex items-center space-x-4 border-b border-white/5 pb-4"
                   >
                     {/* Product Image */}
                     <button
@@ -100,7 +100,7 @@ export default function WishlistDrawer({
                         onQuickView(product);
                         onClose();
                       }}
-                      className="w-16 h-20 bg-stone-100 overflow-hidden shrink-0 group border border-stone-200/40"
+                      className="w-16 h-20 bg-white/5 overflow-hidden shrink-0 group border border-white/10"
                     >
                       <img
                         src={product.images[0]}
@@ -117,14 +117,14 @@ export default function WishlistDrawer({
                           onQuickView(product);
                           onClose();
                         }}
-                        className="text-left font-serif text-sm text-luxury-obsidian font-medium truncate block hover:text-luxury-crimson transition-colors w-full"
+                        className="text-left font-serif text-sm text-luxury-obsidian font-medium truncate block hover:text-luxury-crimson transition-colors duration-300 w-full"
                       >
                         {product.name}
                       </button>
-                      <span className="text-[8px] uppercase tracking-widest font-mono text-luxury-sand block mt-0.5">
+                      <span className="text-[8px] uppercase tracking-widest font-mono text-luxury-sand block mt-0.5 font-medium">
                         {product.collection}
                       </span>
-                      <span className="text-xs font-mono text-stone-600 block mt-1">
+                      <span className="text-xs font-mono text-luxury-obsidian/60 block mt-1">
                         ${product.price.toLocaleString()}
                       </span>
                     </div>
@@ -136,14 +136,14 @@ export default function WishlistDrawer({
                           onQuickView(product);
                           onClose();
                         }}
-                        className="text-[9px] font-mono uppercase tracking-widest text-luxury-obsidian hover:text-luxury-crimson flex items-center space-x-1 border-b border-transparent hover:border-luxury-crimson pb-0.5 transition-all"
+                        className="text-[9px] font-mono uppercase tracking-widest text-luxury-obsidian hover:text-luxury-crimson flex items-center space-x-1 border-b border-transparent hover:border-luxury-crimson pb-0.5 transition-all duration-300 cursor-pointer"
                       >
                         <span>View</span>
                         <ArrowRight size={10} />
                       </button>
                       <button
                         onClick={() => onRemoveFromWishlist(product.id)}
-                        className="text-stone-400 hover:text-red-500 transition-colors p-1"
+                        className="text-luxury-obsidian/40 hover:text-luxury-crimson transition-colors duration-300 p-1 cursor-pointer"
                         aria-label="Remove favorite"
                       >
                         <Trash2 size={13} />
@@ -158,8 +158,8 @@ export default function WishlistDrawer({
 
         {/* Drawer Footer */}
         {wishlistedProducts.length > 0 && (
-          <div className="p-6 border-t border-stone-200/60 bg-stone-50/50">
-            <p className="text-[10px] text-stone-500 text-center font-mono leading-relaxed">
+          <div className="p-6 border-t border-white/10 bg-white/5">
+            <p className="text-[10px] text-luxury-obsidian/40 text-center font-mono leading-relaxed">
               Saved items are persisted in your local couture archive for your next appointment.
             </p>
           </div>

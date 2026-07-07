@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, ArrowRight, Instagram, Facebook, Mail, Check } from 'lucide-react';
+import { Sparkles, ArrowRight, Instagram, Facebook, Mail, Check, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -20,64 +20,57 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#161616] text-[#F2F1ED] pt-20 pb-10 px-6 md:px-12 lg:px-24">
+    <footer className="bg-[#161616] text-[#F2F1ED] pt-12 pb-6 px-6 md:px-12 lg:px-24 border-t border-white/5">
       <div className="max-w-7xl mx-auto">
         
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16 border-b border-stone-800">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-10 border-b border-stone-800">
           
           {/* Brand History */}
-          <div className="space-y-6">
+          <div className="space-y-5">
             <div>
-              <img src="/assets/logo-transparent.png" alt="LJ Collective" className="h-14 w-auto mb-4" />
-              <span className="text-[8px] uppercase tracking-[0.2em] text-luxury-crimson mt-1 block">Elegance tailored for you</span>
+              <img src="/assets/logo-transparent.png" alt="LJ Collective" className="h-36 w-auto mb-2" />
+              <span className="text-[10px] uppercase tracking-[0.2em] text-luxury-sand-light mt-1 block font-semibold">Elegance tailored for you</span>
             </div>
             <p className="text-xs text-stone-400 leading-relaxed font-sans text-justify-luxury max-w-sm">
-              Founded under the guiding philosophy of immersive structural poetry, the Maison tailoring studio continues to bridge traditional French haute-couture hand-pleating with clean, minimalist shapes for the modern global collector.
+              LJ Collective is a premier Kenyan luxury design house based in Nairobi, bridging rich heritage craftsmanship with modern structural silhouettes for the global collector.
             </p>
-            <div className="flex items-center space-x-4 pt-2">
-              <a href="#" aria-label="Instagram" className="text-stone-400 hover:text-luxury-crimson transition-colors">
-                <Instagram size={16} />
+            <div className="flex items-center space-x-5 pt-2">
+              <a href="https://www.instagram.com/lj__collective/?__pwa=1" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-stone-400 hover:text-luxury-sand transition-colors">
+                <Instagram size={22} />
               </a>
-              <a href="#" aria-label="Facebook" className="text-stone-400 hover:text-luxury-crimson transition-colors">
-                <Facebook size={16} />
+              <a href="https://wa.me/254725220195" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="text-stone-400 hover:text-luxury-sand transition-colors">
+                <MessageCircle size={22} />
               </a>
-              <a href="#" aria-label="Email" className="text-stone-400 hover:text-luxury-crimson transition-colors">
-                <Mail size={16} />
+              <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-stone-400 hover:text-luxury-sand transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                </svg>
+              </a>
+              <a href="mailto:concierge@ljcollective.com" aria-label="Email" className="text-stone-400 hover:text-luxury-sand transition-colors">
+                <Mail size={22} />
               </a>
             </div>
           </div>
 
-          {/* Links Section 1: Customer Service */}
-          <div>
-            <span className="mono-label text-luxury-crimson block mb-6 text-[10px]">Client Care</span>
-            <ul className="space-y-3.5 text-xs text-stone-400">
+          {/* Links Section: Customer Service & Maison */}
+          <div className="md:pl-6">
+            <span className="mono-label text-luxury-sand block mb-5 text-[10px] font-bold">Client Care & Atelier</span>
+            <ul className="space-y-3 text-xs text-stone-400">
+              <li><a href="#" className="hover:text-white transition-colors">Nairobi Atelier & Heritage</a></li>
               <li><a href="#" className="hover:text-white transition-colors">White-Glove Shipping & Returns</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Bespoke In-Atelier Adjustments</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Private Dressing Room Schedules</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Couture Archival & Preservation</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Atelier Concierge Line: +33 (0) 1 45 61</a></li>
-            </ul>
-          </div>
-
-          {/* Links Section 2: Maison History */}
-          <div>
-            <span className="mono-label text-luxury-crimson block mb-6 text-[10px]">The Maison</span>
-            <ul className="space-y-3.5 text-xs text-stone-400">
-              <li><a href="#" className="hover:text-white transition-colors">Artisanal Heritage & Ethics</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">The Parisian Sewing Atelier</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Partnership & Precious Gold Sourcing</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Maison Pressroom & Chronicles</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Career Opportunities</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Private Dressing Room Fittings</a></li>
+              <li><a href="https://wa.me/254725220195" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors font-medium">Atelier Concierge: +254 725 220 195</a></li>
             </ul>
           </div>
 
           {/* Newsletter Box */}
-          <div className="space-y-6">
+          <div className="space-y-5">
             <div>
-              <span className="mono-label text-luxury-crimson block mb-2 text-[10px]">Join the Gazette</span>
+              <span className="mono-label text-luxury-sand block mb-2 text-[10px] font-bold">Join the Gazette</span>
               <p className="text-xs text-stone-400 leading-relaxed font-sans">
-                Subscribe to receive private lookbooks, invitation-only couture viewings, and studio logs.
+                Subscribe to receive private lookbooks, invitation-only viewings, and studio logs.
               </p>
             </div>
 
@@ -87,7 +80,7 @@ export default function Footer() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="flex items-center space-x-2 text-xs text-luxury-crimson font-serif bg-stone-900 p-3 border border-luxury-crimson/30"
+                  className="flex items-center space-x-2 text-xs text-luxury-sand font-serif bg-[#0F0F0F] p-3 border border-luxury-sand/30"
                 >
                   <Check size={14} className="text-emerald-500" />
                   <span>Subscribed to private logs.</span>
@@ -100,12 +93,12 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="ENTER YOUR MAIL..."
-                    className="bg-transparent text-xs text-white placeholder-stone-600 focus:outline-none w-full tracking-wider uppercase font-sans"
+                    className="bg-transparent text-xs text-white placeholder-stone-500 focus:outline-none w-full tracking-wider uppercase font-sans"
                   />
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="text-stone-400 hover:text-luxury-crimson transition-colors pl-2"
+                    className="text-stone-400 hover:text-luxury-sand transition-colors pl-2"
                     aria-label="Submit newsletter email"
                   >
                     <ArrowRight size={16} />
@@ -122,9 +115,10 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-10 flex flex-col md:flex-row items-center justify-between text-stone-600 text-[10px] uppercase tracking-widest gap-4">
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between text-stone-600 text-[10px] uppercase tracking-widest gap-4">
           <div>
             <span>© 2026 LJ Collective. All Rights Reserved.</span>
+            <span className="block mt-1 text-[8px] text-stone-500 tracking-[0.12em] font-mono lowercase">Powered by Galvaniy Technologies</span>
           </div>
           <div className="flex space-x-6">
             <a href="#" className="hover:text-stone-400 transition-colors">Terms of Use</a>
