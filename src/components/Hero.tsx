@@ -180,12 +180,12 @@ export default function Hero() {
               </div>
 
               {/* Foreground: Aligned Centered Text Overlay */}
-              <div className="relative z-35 mx-auto max-w-xl md:max-w-2xl lg:max-w-3xl flex flex-col items-center text-center p-4">
+              <div className="relative z-35 mx-auto max-w-xl md:max-w-2xl lg:max-w-3xl flex flex-col items-center text-center p-4 w-full">
                 <motion.h2
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.2, delay: 0.2 }}
-                  className="font-serif text-5xl md:text-6xl lg:text-7.5xl tracking-[0.08em] text-luxury-sand uppercase leading-none font-medium select-none"
+                  className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7.5xl tracking-[0.08em] text-luxury-sand uppercase leading-none font-medium select-none"
                 >
                   LJ_COLLECTIVE
                 </motion.h2>
@@ -194,7 +194,7 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.2, delay: 0.35 }}
-                  className="font-serif text-xl md:text-2xl lg:text-3.5xl tracking-[0.18em] text-luxury-sand-light uppercase mt-3 select-none"
+                  className="font-serif text-xs sm:text-base md:text-2xl lg:text-3.5xl tracking-[0.18em] text-luxury-sand-light uppercase mt-3 select-none"
                 >
                   Elegance Tailored For You
                 </motion.h3>
@@ -203,7 +203,7 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.2, delay: 0.5 }}
-                  className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-stone-300 mt-8 font-semibold select-none"
+                  className="text-[9px] sm:text-xs tracking-[0.25em] uppercase text-stone-300 mt-8 font-semibold select-none"
                 >
                   Discover The Première Collection
                 </motion.p>
