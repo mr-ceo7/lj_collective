@@ -230,3 +230,44 @@
     inset -2px -2px 6px rgba(255, 255, 255, 0.02),
     0 0 0 2px rgba(113, 0, 20, 0.1);
 }
+
+/* ═══════════════════════════════════════════════
+   Cinematic Lookbook Carousel Styles
+   ═══════════════════════════════════════════════ */
+
+.lookbook-carousel-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.lookbook-orbit-card {
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.lookbook-spotlight-overlay {
+  background: rgba(15, 15, 15, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  animation: spotlightFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes spotlightFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.lookbook-paused-indicator {
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+

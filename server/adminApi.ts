@@ -1,4 +1,6 @@
 import crypto from 'crypto';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import express, { RequestHandler } from 'express';
 import dotenv from 'dotenv';
 import { products as seedProducts } from '../src/data';
@@ -7,11 +9,88 @@ import { CampaignAsset, LeadRecord } from '../src/admin/types';
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
-const port = Number(process.env.ADMIN_API_PORT || 8787);
+const port = Number(process.env.PORT || process.env.ADMIN_API_PORT || 8787);
 
 let products: Product[] = [...seedProducts];
-let campaigns: CampaignAsset[] = [];
+let campaigns: CampaignAsset[] = [
+  // Seed lookbook campaigns so the carousel has content out of the box
+  {
+    id: 'lookbook-seed-1',
+    title: 'Sculpted Silk Drape',
+    imageUrl: '/assets/SaveClip.App_726247220_18412051285196378_8868740418072431020_n.jpg',
+    placement: 'lookbook',
+    status: 'published',
+    sortOrder: 1,
+    createdAt: new Date().toISOString(),
+    tag: 'Summer Atelier',
+    ctaText: 'View Collection',
+    ctaLink: '#showroom',
+  },
+  {
+    id: 'lookbook-seed-2',
+    title: 'Atelier Velvet Gown',
+    imageUrl: '/assets/SaveClip.App_624834568_18017954063804569_8949826810407604632_n.jpg',
+    placement: 'lookbook',
+    status: 'published',
+    sortOrder: 2,
+    createdAt: new Date().toISOString(),
+    tag: 'Haute Couture',
+    ctaText: 'Shop Now',
+    ctaLink: '#showroom',
+  },
+  {
+    id: 'lookbook-seed-3',
+    title: 'Gold Filigree Embroidery',
+    imageUrl: '/assets/SaveClip.App_722933692_17939682528252474_6588271153929750448_n.jpg',
+    placement: 'lookbook',
+    status: 'published',
+    sortOrder: 3,
+    createdAt: new Date().toISOString(),
+    tag: 'Bespoke Craft',
+    ctaText: 'Explore Piece',
+    ctaLink: '#showroom',
+  },
+  {
+    id: 'lookbook-seed-4',
+    title: 'Structured Silhouette',
+    imageUrl: '/assets/SaveClip.App_726380751_18412051270196378_903608071847032010_n.jpg',
+    placement: 'lookbook',
+    status: 'published',
+    sortOrder: 4,
+    createdAt: new Date().toISOString(),
+    tag: 'Winter Tailoring',
+    ctaText: 'View Details',
+    ctaLink: '#showroom',
+  },
+  {
+    id: 'lookbook-seed-5',
+    title: 'Midnight Noir Elegance',
+    imageUrl: '/assets/SaveClip.App_623758730_18076782257608947_7818919390501333055_n.jpg',
+    placement: 'lookbook',
+    status: 'published',
+    sortOrder: 5,
+    createdAt: new Date().toISOString(),
+    tag: 'Evening Collection',
+    ctaText: 'Discover More',
+    ctaLink: '#showroom',
+  },
+  {
+    id: 'lookbook-seed-6',
+    title: 'Parisian Atelier Dream',
+    imageUrl: '/assets/SaveClip.App_620992128_17955701148055842_8542658560222115683_n.jpg',
+    placement: 'lookbook',
+    status: 'published',
+    sortOrder: 6,
+    createdAt: new Date().toISOString(),
+    tag: 'Essential Classic',
+    ctaText: 'Shop Collection',
+    ctaLink: '#showroom',
+  },
+];
 let leads: LeadRecord[] = [
   {
     id: 'lead-private-fitting-demo',
@@ -110,7 +189,7 @@ app.get('/api/admin/campaigns', requireAdmin, (_request, response) => {
 });
 
 app.post('/api/admin/campaigns', requireAdmin, (request, response) => {
-  const { title, imageUrl, placement = 'landing', status = 'draft' } = request.body as Partial<CampaignAsset>;
+  const { title, imageUrl, placement = 'landing', status = 'draft', tag, ctaText, ctaLink } = request.body as Partial<CampaignAsset>;
   if (!title || !imageUrl) {
     response.status(400).send('Campaign title and imageUrl are required.');
     return;
@@ -124,9 +203,30 @@ app.post('/api/admin/campaigns', requireAdmin, (request, response) => {
     status,
     sortOrder: campaigns.length + 1,
     createdAt: new Date().toISOString(),
+    tag: tag || '',
+    ctaText: ctaText || '',
+    ctaLink: ctaLink || '',
   };
   campaigns = [campaign, ...campaigns];
   response.status(201).json(campaign);
+});
+
+app.delete('/api/admin/campaigns/:id', requireAdmin, (request, response) => {
+  const exists = campaigns.some((c) => c.id === request.params.id);
+  if (!exists) {
+    response.status(404).send('Campaign not found.');
+    return;
+  }
+  campaigns = campaigns.filter((c) => c.id !== request.params.id);
+  response.json({ ok: true });
+});
+
+// Public endpoint — no auth required. Returns only published lookbook campaigns.
+app.get('/api/lookbook', (_request, response) => {
+  const lookbookItems = campaigns
+    .filter((c) => c.placement === 'lookbook' && c.status === 'published')
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+  response.json(lookbookItems);
 });
 
 app.get('/api/admin/leads', requireAdmin, (_request, response) => {
@@ -153,6 +253,23 @@ app.post('/api/admin/uploads/campaign-signature', requireAdmin, (_request, respo
   response.status(501).json({
     message: 'Configure a storage adapter here to return a signed upload URL for S3, Cloudinary, Firebase Storage, or Supabase Storage.',
   });
+});
+
+// Resolve the static files directory:
+// If running from server/ directory in dev, serve from '../dist'.
+// If bundled in production (dist/server.js), serve from current directory '.'.
+const distPath = __dirname.endsWith('server')
+  ? path.resolve(__dirname, '../dist')
+  : path.resolve(__dirname, '.');
+
+app.use(express.static(distPath));
+
+// Fallback index.html for client-side routing, excluding API routes
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.listen(port, () => {

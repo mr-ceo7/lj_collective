@@ -10,6 +10,9 @@ export interface CampaignAsset {
   status: 'draft' | 'published';
   sortOrder: number;
   createdAt: string;
+  tag?: string;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
 export interface LeadRecord {

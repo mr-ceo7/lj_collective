@@ -129,15 +129,15 @@ export default function Hero() {
               style={{ opacity: opacityText }}
               className="max-w-7xl mx-auto w-full h-full px-6 md:px-12 z-30 flex items-center justify-center relative"
             >
-              {/* Left Side: Gown Image Background Panel (visible on desktop) */}
-              <div className="absolute left-0 top-0 w-[42%] h-full hidden md:block overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 bg-black/45 z-10" />
+              {/* Left Side: Gown Image Background Panel (visible on all screen sizes, full-width on mobile) */}
+              <div className="absolute left-0 top-0 w-full md:w-[42%] h-full overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 bg-black/65 md:bg-black/45 z-10" />
                 <img
                   src="/assets/SaveClip.App_731769807_17943153426252474_5056458473949518396_n.jpg"
                   alt="Atelier Velvet Gown"
                   className="w-full h-full object-cover filter brightness-90 contrast-[1.02]"
                 />
-                <div className="absolute inset-y-0 right-0 w-[100px] bg-gradient-to-l from-luxury-pearl via-luxury-pearl/80 to-transparent z-15" />
+                <div className="absolute inset-y-0 right-0 w-[100px] bg-gradient-to-l from-luxury-pearl via-luxury-pearl/80 to-transparent z-15 hidden md:block" />
               </div>
 
               {/* Right Side: Skewed Gold-Bordered Collage Background Panel (visible on desktop) */}

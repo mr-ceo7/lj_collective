@@ -50,6 +50,9 @@ export default function AdminDashboard() {
     imageUrl: '',
     placement: 'landing' as CampaignAsset['placement'],
     status: 'draft' as CampaignAsset['status'],
+    tag: '',
+    ctaText: '',
+    ctaLink: '',
   });
   const [statusMessage, setStatusMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -126,10 +129,31 @@ export default function AdminDashboard() {
         body: JSON.stringify(campaignDraft),
       });
       setCampaigns((current) => [created, ...current]);
-      setCampaignDraft({ title: '', imageUrl: '', placement: 'landing', status: 'draft' });
+      setCampaignDraft({
+        title: '',
+        imageUrl: '',
+        placement: 'landing',
+        status: 'draft',
+        tag: '',
+        ctaText: '',
+        ctaLink: '',
+      });
       setStatusMessage('Campaign photo saved.');
     } catch (error) {
       setStatusMessage(error instanceof Error ? error.message : 'Unable to save campaign.');
+    }
+  };
+
+  const handleDeleteCampaign = async (campaignId: string) => {
+    setStatusMessage('');
+    try {
+      await adminFetch<{ ok: true }>(`/api/admin/campaigns/${campaignId}`, token, {
+        method: 'DELETE',
+      });
+      setCampaigns((current) => current.filter((c) => c.id !== campaignId));
+      setStatusMessage('Campaign photo removed.');
+    } catch (error) {
+      setStatusMessage(error instanceof Error ? error.message : 'Unable to delete campaign.');
     }
   };
 
@@ -272,11 +296,12 @@ export default function AdminDashboard() {
               <h2 className="font-serif text-2xl">Post Campaign Photo</h2>
               <input required value={campaignDraft.title} onChange={(e) => setCampaignDraft({ ...campaignDraft, title: e.target.value })} placeholder="Campaign title" className="clay-input w-full px-3 py-2 text-xs" />
               <input required value={campaignDraft.imageUrl} onChange={(e) => setCampaignDraft({ ...campaignDraft, imageUrl: e.target.value })} placeholder="Uploaded image URL" className="clay-input w-full px-3 py-2 text-xs" />
+              
               <div className="grid grid-cols-2 gap-3">
                 <select value={campaignDraft.placement} onChange={(e) => setCampaignDraft({ ...campaignDraft, placement: e.target.value as CampaignAsset['placement'] })} className="clay-input px-3 py-2 text-xs">
                   <option value="hero">Hero</option>
                   <option value="landing">Landing</option>
-                  <option value="lookbook">Lookbook</option>
+                  <option value="lookbook">Lookbook (Carousel)</option>
                   <option value="product-story">Product story</option>
                 </select>
                 <select value={campaignDraft.status} onChange={(e) => setCampaignDraft({ ...campaignDraft, status: e.target.value as CampaignAsset['status'] })} className="clay-input px-3 py-2 text-xs">
@@ -284,6 +309,18 @@ export default function AdminDashboard() {
                   <option value="published">Published</option>
                 </select>
               </div>
+
+              {campaignDraft.placement === 'lookbook' && (
+                <div className="border-t border-white/5 pt-3 space-y-3">
+                  <p className="mono-label text-[8px] text-luxury-sand">Lookbook Carousel Settings</p>
+                  <input value={campaignDraft.tag} onChange={(e) => setCampaignDraft({ ...campaignDraft, tag: e.target.value })} placeholder="Tag (e.g. Haute Couture)" className="clay-input w-full px-3 py-2 text-xs" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <input value={campaignDraft.ctaText} onChange={(e) => setCampaignDraft({ ...campaignDraft, ctaText: e.target.value })} placeholder="CTA Text (e.g. Shop Now)" className="clay-input px-3 py-2 text-xs" />
+                    <input value={campaignDraft.ctaLink} onChange={(e) => setCampaignDraft({ ...campaignDraft, ctaLink: e.target.value })} placeholder="CTA Link (e.g. #showroom)" className="clay-input px-3 py-2 text-xs" />
+                  </div>
+                </div>
+              )}
+
               <button type="submit" className="inline-flex w-full items-center justify-center gap-2 bg-luxury-crimson px-4 py-3 text-[10px] font-semibold uppercase tracking-widest text-white">
                 <ImageUp size={14} />
                 Save Campaign
@@ -292,12 +329,37 @@ export default function AdminDashboard() {
 
             <div className="grid gap-4 md:grid-cols-2">
               {campaigns.map((campaign) => (
-                <article key={campaign.id} className="border border-white/10 p-3">
+                <article key={campaign.id} className="border border-white/10 p-3 relative group">
                   <img src={campaign.imageUrl} alt={campaign.title} className="aspect-[4/3] w-full object-cover" />
+                  
+                  {/* Delete Campaign Button */}
+                  <button 
+                    onClick={() => handleDeleteCampaign(campaign.id)}
+                    className="absolute top-5 right-5 p-2 bg-black/80 hover:bg-luxury-crimson text-white transition-colors duration-300 rounded-xs shadow-lg border border-white/10"
+                    title="Delete Campaign Photo"
+                  >
+                    <Trash2 size={13} />
+                  </button>
+
                   <div className="mt-3 flex items-center justify-between gap-3">
                     <div>
-                      <h3 className="font-serif text-lg">{campaign.title}</h3>
-                      <p className="text-[10px] uppercase tracking-widest text-stone-400">{campaign.placement} / {campaign.status}</p>
+                      <h3 className="font-serif text-lg flex items-center gap-2">
+                        {campaign.title}
+                        {campaign.placement === 'lookbook' && (
+                          <span className="bg-luxury-sand/20 text-luxury-sand-light border border-luxury-sand/30 font-mono text-[7px] uppercase tracking-widest px-1.5 py-0.5 rounded-xs">
+                            Lookbook
+                          </span>
+                        )}
+                      </h3>
+                      <p className="text-[10px] uppercase tracking-widest text-stone-400">
+                        {campaign.placement} / {campaign.status}
+                      </p>
+                      {campaign.placement === 'lookbook' && (
+                        <div className="mt-1 text-[8px] font-mono text-stone-500">
+                          {campaign.tag && <span>Tag: {campaign.tag} </span>}
+                          {campaign.ctaText && <span>| CTA: {campaign.ctaText} ({campaign.ctaLink || '#showroom'})</span>}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </article>
