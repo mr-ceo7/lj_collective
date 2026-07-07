@@ -133,7 +133,7 @@ export default function Hero() {
               <div className="absolute left-0 top-0 w-[42%] h-full hidden md:block overflow-hidden pointer-events-none">
                 <div className="absolute inset-0 bg-black/45 z-10" />
                 <img
-                  src="/assets/SaveClip.App_624834568_18017954063804569_8949826810407604632_n.jpg"
+                  src="/assets/SaveClip.App_731769807_17943153426252474_5056458473949518396_n.jpg"
                   alt="Atelier Velvet Gown"
                   className="w-full h-full object-cover filter brightness-90 contrast-[1.02]"
                 />
@@ -179,70 +179,49 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Foreground: Aligned Centered Glassmorphic Text Card */}
-              <div className="relative z-30 mx-auto max-w-xl md:max-w-2xl lg:max-w-3xl flex flex-col items-center text-center bg-luxury-pearl/78 border border-luxury-sand/15 backdrop-blur-md p-8 md:p-12 shadow-2xl rounded-sm">
-                <motion.span
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                  className="mono-label text-luxury-crimson mb-4"
-                >
-                  The Inaugural Collection
-                </motion.span>
-
+              {/* Foreground: Aligned Centered Text Overlay */}
+              <div className="relative z-35 mx-auto max-w-xl md:max-w-2xl lg:max-w-3xl flex flex-col items-center text-center p-4">
                 <motion.h2
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1.2, delay: 0.3 }}
-                  className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-widest text-luxury-obsidian uppercase leading-tight font-light select-none"
+                  transition={{ duration: 1.2, delay: 0.2 }}
+                  className="font-serif text-5xl md:text-6xl lg:text-7.5xl tracking-[0.08em] text-luxury-sand uppercase leading-none font-medium select-none"
                 >
-                  L'ÉLÉGANCE
-                  <span className="block italic text-luxury-crimson font-normal mt-1 text-[0.86em]">
-                    Collective
-                  </span>
+                  LJ_COLLECTIVE
                 </motion.h2>
+
+                <motion.h3
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.2, delay: 0.35 }}
+                  className="font-serif text-xl md:text-2xl lg:text-3.5xl tracking-[0.18em] text-luxury-sand-light uppercase mt-3 select-none"
+                >
+                  Elegance Tailored For You
+                </motion.h3>
 
                 <motion.p
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  className="mt-6 font-serif text-base md:text-xl leading-relaxed text-luxury-obsidian max-w-xl"
+                  transition={{ duration: 1.2, delay: 0.5 }}
+                  className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-stone-300 mt-8 font-semibold select-none"
                 >
-                  Couture gowns, tailored occasionwear, and private fitting experiences.
-                </motion.p>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 0.7, y: 0 }}
-                  transition={{ duration: 1, delay: 0.62 }}
-                  className="text-[10px] md:text-xs font-sans tracking-[0.18em] uppercase text-luxury-obsidian/80 mt-4 max-w-lg leading-relaxed"
-                >
-                  Limited atelier quantities, insured delivery, and bespoke alteration support for every collector.
+                  Discover The Première Collection
                 </motion.p>
 
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 1.2, delay: 0.8 }}
-                  className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full"
+                  transition={{ duration: 1.2, delay: 0.7 }}
+                  className="mt-10 w-full flex justify-center"
                 >
                   <button
                     onClick={() => {
                       const el = document.getElementById('showroom');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="inline-flex min-w-[210px] items-center justify-center gap-2 px-8 py-4 bg-luxury-crimson border border-luxury-crimson text-xs uppercase tracking-widest text-white font-semibold btn-luxury cursor-pointer shadow-lg hover:bg-luxury-crimson-light"
+                    className="inline-flex items-center justify-center px-10 py-4 border border-luxury-sand text-xs uppercase tracking-[0.22em] text-luxury-sand hover:bg-luxury-sand hover:text-stone-950 transition-all duration-350 ease-out font-semibold cursor-pointer bg-transparent shadow-2xl"
                   >
-                    <ShoppingBag size={13} />
-                    Shop The Collection
-                  </button>
-
-                  <button
-                    onClick={handleBookFitting}
-                    className="inline-flex min-w-[210px] items-center justify-center gap-2 px-8 py-4 border border-luxury-obsidian/45 hover:border-luxury-obsidian text-xs uppercase tracking-widest text-luxury-obsidian font-semibold btn-luxury cursor-pointer bg-white/5 backdrop-blur-xs hover:bg-white/10"
-                  >
-                    <Calendar size={13} />
-                    Book Private Fitting
+                    Explore Bespoke
                   </button>
                 </motion.div>
               </div>
